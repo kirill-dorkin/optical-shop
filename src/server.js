@@ -39,6 +39,7 @@ import { categories } from "./backend/db/categories";
 import { products } from "./backend/db/products";
 import { users } from "./backend/db/users";
 import { brands } from "./backend/db/brands";
+import { persistDb } from "./backend/utils/persistDb";
 
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
@@ -59,16 +60,27 @@ export function makeServer({ environment = "development" } = {}) {
     seeds(server) {
       // disballing console logs from Mirage
       server.logging = false;
-      products.forEach((item) => {
-        server.create("product", { ...item });
-      });
+
+      const stored = localStorage.getItem("mirageDB");
+
+      if (stored) {
+        const { products: storedProducts = [], categories: storedCategories = [], brands: storedBrands = [] } = JSON.parse(stored);
+        storedProducts.forEach((item) => server.create("product", { ...item }));
+        storedCategories.forEach((item) => server.create("category", { ...item }));
+        storedBrands.forEach((item) => server.create("brand", { ...item }));
+      } else {
+        products.forEach((item) => {
+          server.create("product", { ...item });
+        });
+
+        categories.forEach((item) => server.create("category", { ...item }));
+        brands.forEach((item) => server.create("brand", { ...item }));
+        persistDb(server);
+      }
 
       users.forEach((item) =>
         server.create("user", { ...item, cart: [], wishlist: [] })
       );
-
-      categories.forEach((item) => server.create("category", { ...item }));
-      brands.forEach((item) => server.create("brand", { ...item }));
     },
 
     routes() {
