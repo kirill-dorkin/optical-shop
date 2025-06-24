@@ -21,7 +21,11 @@ const SingleProduct = ({ product }) => {
           navigate(`/product/${product._id}`);
         }}
       >
-        <img src={product.image} alt="" className="w-full h-full object-cover" />
+        <img
+          src={product.image}
+          alt=""
+          className="w-full h-full object-cover block"
+        />
       </div>
 
       <div className="p-3 flex flex-col justify-between gap-2 mt-2 h-1/2 xs:h-full sm:h-1/2 xs:w-2/3 w-full sm:w-full">
