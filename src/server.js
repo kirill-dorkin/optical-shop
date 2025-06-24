@@ -22,6 +22,15 @@ import {
   getWishlistItemsHandler,
   removeItemFromWishlistHandler,
 } from "./backend/controllers/WishlistController";
+import {
+  adminLoginHandler,
+  addProductHandler,
+  updateProductHandler,
+  deleteProductHandler,
+  addCategoryHandler,
+  updateCategoryHandler,
+  deleteCategoryHandler,
+} from "./backend/controllers/AdminController";
 import { categories } from "./backend/db/categories";
 import { products } from "./backend/db/products";
 import { users } from "./backend/db/users";
@@ -84,6 +93,24 @@ export function makeServer({ environment = "development" } = {}) {
       this.delete(
         "/user/wishlist/:productId",
         removeItemFromWishlistHandler.bind(this)
+      );
+
+      // admin routes
+      this.post("/admin/login", adminLoginHandler.bind(this));
+      this.post("/admin/products", addProductHandler.bind(this));
+      this.put("/admin/products/:productId", updateProductHandler.bind(this));
+      this.delete(
+        "/admin/products/:productId",
+        deleteProductHandler.bind(this)
+      );
+      this.post("/admin/categories", addCategoryHandler.bind(this));
+      this.put(
+        "/admin/categories/:categoryId",
+        updateCategoryHandler.bind(this)
+      );
+      this.delete(
+        "/admin/categories/:categoryId",
+        deleteCategoryHandler.bind(this)
       );
     },
   });

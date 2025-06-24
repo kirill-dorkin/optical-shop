@@ -10,6 +10,7 @@ import {
   CartContextProvider,
   ProductsContextProvider,
   WishlistContextProvider,
+  AdminContextProvider,
 } from "./contexts";
 
 // Call make Server
@@ -18,16 +19,18 @@ makeServer();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <ProductsContextProvider>
-        <CartContextProvider>
-          <WishlistContextProvider>
-            <Router>
-              <App />
-            </Router>
-          </WishlistContextProvider>
-        </CartContextProvider>
-      </ProductsContextProvider>
-    </AuthContextProvider>
+    <AdminContextProvider>
+      <AuthContextProvider>
+        <ProductsContextProvider>
+          <CartContextProvider>
+            <WishlistContextProvider>
+              <Router>
+                <App />
+              </Router>
+            </WishlistContextProvider>
+          </CartContextProvider>
+        </ProductsContextProvider>
+      </AuthContextProvider>
+    </AdminContextProvider>
   </React.StrictMode>
 );
