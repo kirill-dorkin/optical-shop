@@ -53,7 +53,7 @@ const CartItemCard = ({ product, isSearch, setSearch }) => {
             {!isSearch && (
               <div className="flex flex-col gap-3">
                 <div className="flex gap-2 items-center">
-                  <span className="text-gray-700">Quantity: </span>
+                  <span className="text-gray-700">Количество: </span>
                   <button
                     className="bg-[--primary-text-color] p-1 text-gray-100 rounded-md  text-xs disabled:cursor-not-allowed"
                     disabled={disableCart}
@@ -78,7 +78,7 @@ const CartItemCard = ({ product, isSearch, setSearch }) => {
                     disabled={disableCart}
                     onClick={() => deleteProductFromCart(product._id)}
                   >
-                    Remove from Bag
+                    Удалить из корзины
                   </button>
                   <button
                     className="disabled:cursor-not-allowed"

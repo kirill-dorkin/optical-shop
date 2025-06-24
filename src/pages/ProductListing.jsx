@@ -63,7 +63,7 @@ const ProductListing = () => {
             />
           </header>
           <section className="py-3 flex flex-col md:flex-row gap-2 justify-between">
-            <h1 className="text-2xl font-bold">Glasses for You!</h1>
+            <h1 className="text-2xl font-bold">Очки для вас!</h1>
             <div className="flex items-center gap-2">
               <Filters
                 isFilterOpen={isFilterOpen}
@@ -77,7 +77,7 @@ const ProductListing = () => {
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
               >
                 <BiFilter className="text-lg" />
-                <span className="text-sm">Filters</span>
+                <span className="text-sm">Фильтры</span>
               </button>
             </div>
           </section>
@@ -90,7 +90,7 @@ const ProductListing = () => {
             </main>
           ) : (
             <p className="font-sans text-4xl  font-bold uppercase  tracking-wide text-gray-300 text-center w-full py-32">
-              Nothing to Show!
+              Нечего показать!
             </p>
           )}
           <button

@@ -11,7 +11,7 @@ const SummaryCard = ({ setShowModal }) => {
 
   return (
     <section className="py-3 md:py-7 px-5 md:px-7 lg:px-12 rounded-md shadow-sm bg-white/[0.7] flex flex-col gap-5 w-full h-min">
-      <h1 className="text-2xl font-bold">Order Summary</h1>
+      <h1 className="text-2xl font-bold">Сводка заказа</h1>
 
       {cart.map((item) => (
         <div
@@ -45,7 +45,7 @@ const SummaryCard = ({ setShowModal }) => {
 
       <hr />
       <div className="flex justify-between items-center">
-        <p className=" text-gray-600">Total</p>
+        <p className=" text-gray-600">Итого</p>
         <p className="text-2xl">₹{totalPriceOfCartProducts}</p>
       </div>
 
@@ -56,14 +56,14 @@ const SummaryCard = ({ setShowModal }) => {
               addressList.length === 0 ||
               Object.keys(currentAddress).length === 0
             ) {
-              notify("warn", "Please Select or Add an Address.");
+              notify("warn", "Пожалуйста, выберите или добавьте адрес.");
             } else {
               setShowModal(true);
             }
           }}
           className="btn-rounded-primary rounded-full flex items-center gap-2 md:text-sm lg:text-base"
         >
-          Place Order
+          Оформить заказ
         </button>
       </div>
     </section>

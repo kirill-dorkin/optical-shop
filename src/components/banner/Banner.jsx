@@ -10,19 +10,19 @@ const Banner = ({ catRef }) => {
     <main className=" flex justify-between items-center py-1 mb-5  relative">
       <section className="max-w-xl mx-auto sm:mx-0  w-full py-2  lg:w-1/3">
         <h1 className="text-6xl  sm:text-7xl lg:text-8xl font-semibold  py-3 w-full ">
-          Glasses & Lens
+          Очки и линзы
         </h1>
         <p className="py-3 text-md  text-gray-600">
-          Buy the best high-quality sunglasses from us.
+          Покупайте у нас лучшие качественные солнцезащитные очки.
           <br />
-          More than 100 types of assortment.
+          Более 100 видов ассортимента.
         </p>
         <section className="flex items-center">
           <button
             className="btn-primary text-sm md:text-base"
             onClick={() => navigate("/products")}
           >
-            Start Shopping
+            Начать покупки
           </button>
           <button
             className="p-3 flex items-center"
@@ -32,7 +32,7 @@ const Banner = ({ catRef }) => {
               })
             }
           >
-            <span className="mx-2 text-sm md:text-base">Explore More</span>{" "}
+            <span className="mx-2 text-sm md:text-base">Смотреть больше</span>{" "}
             <BsArrowDownRightCircle className="text-lg" />
           </button>
         </section>

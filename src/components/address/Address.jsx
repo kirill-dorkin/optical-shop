@@ -10,7 +10,7 @@ const Address = ({ isEdit }) => {
   const { addressList } = useProductsContext();
   return (
     <>
-      {!isEdit && <h1 className="text-2xl font-bold">Address</h1>}
+      {!isEdit && <h1 className="text-2xl font-bold">Адрес</h1>}
       {showAddressForm && !editAddress ? (
         <AddressForm
           setShowAddressForm={setShowAddressForm}
@@ -26,7 +26,7 @@ const Address = ({ isEdit }) => {
               setEditAddress(false);
             }}
           >
-            + Add New Address
+            + Добавить адрес
           </button>
         </div>
       )}

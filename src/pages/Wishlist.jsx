@@ -12,7 +12,7 @@ const Wishlist = () => {
         <>
           {" "}
           <h1 className="text-2xl py-6 font-semibold text-gray-800">
-            Wishlist
+            Избранное
           </h1>
           <main className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
             {wishlist.map((glass) => (
@@ -28,10 +28,10 @@ const Wishlist = () => {
             className="w-full xs:w-1/2 sm:w-1/3"
           />
           <span className="font-sans text-xl  font-bold uppercase  tracking-wide text-gray-300">
-            Nothing to Show!
+            Нечего показать!
           </span>
           <p className="text-gray-400">
-            Unlock Your Shopping Desires: Fill Your Empty Wishlist
+            Заполните список избранного и начните покупки
           </p>
         </div>
       )}

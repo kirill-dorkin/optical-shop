@@ -59,7 +59,7 @@ const Search = () => {
           className="w-full py-2 px-3 bg-transparent focus:outline-none"
           type="search"
           value={search}
-          placeholder="Search Glasses"
+          placeholder="Поиск очков"
           onChange={changeHandler}
         />
         <CiSearch />
@@ -82,7 +82,7 @@ const Search = () => {
             ))
           ) : (
             <li className="h-10 flex items-center justify-center">
-              No Item to show
+              Нет предмета, чтобы показать
             </li>
           )}
         </ul>

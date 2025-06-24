@@ -69,7 +69,7 @@ const SingleProduct = ({ product }) => {
             onClick={() => {
               if (!token) {
                 navigate("/login", { state: { from: location.pathname } });
-                notify("warn", "Please Login to continue");
+                notify("warn", "Пожалуйста, войдите, чтобы продолжить");
               } else {
                 if (!inCart) {
                   addProductToCart(product);
@@ -87,7 +87,7 @@ const SingleProduct = ({ product }) => {
             onClick={() => {
               if (!token) {
                 navigate("/login", { state: { from: location.pathname } });
-                notify("warn", "Please Login to continue");
+                notify("warn", "Пожалуйста, войдите, чтобы продолжить");
               } else {
                 if (product?.inWish) {
                   deleteProductFromWishlist(product._id);
