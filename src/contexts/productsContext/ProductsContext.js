@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, useEffect, useReducer, useState, useCallback } from "react";
 import { initialState, productsReducer } from "../../reducers/productsReducer";
 import {
   getAllCategoriesService,
@@ -56,7 +56,7 @@ const ProductsContextProvider = ({ children }) => {
     }
   };
 
-  const refreshBrands = async () => {
+  const refreshBrands = useCallback(async () => {
     setLoading(true);
     try {
       const res = await getAllBrandsService();
@@ -71,7 +71,7 @@ const ProductsContextProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     setLoading(true);

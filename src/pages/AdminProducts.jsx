@@ -17,19 +17,20 @@ const AdminProducts = () => {
     _id: uuid(),
     name: "",
     description: "",
-    price: 0,
-    newPrice: 0,
+    price: "",
+    newPrice: "",
     brand: "",
     category: "",
     gender: "",
     weight: "",
-    quantity: 0,
-    rating: 0,
+    quantity: "",
+    rating: "",
     trending: false,
     image: "",
   });
   const [productForm, setProductForm] = useState(getNewProduct());
   const [isEditing, setIsEditing] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -46,14 +47,23 @@ const AdminProducts = () => {
 
   const saveProduct = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
+    const productData = {
+      ...productForm,
+      price: Number(productForm.price),
+      newPrice: Number(productForm.newPrice),
+      quantity: Number(productForm.quantity),
+      rating: Number(productForm.rating),
+    };
     if (isEditing) {
-      await adminUpdateProductService(productForm._id, productForm, token);
+      await adminUpdateProductService(productForm._id, productData, token);
     } else {
-      await adminAddProductService(productForm, token);
+      await adminAddProductService(productData, token);
     }
     setProductForm(getNewProduct());
     setIsEditing(false);
     setCurrentPage(1);
+    setSubmitted(false);
     refreshProducts();
   };
 
@@ -95,14 +105,14 @@ const AdminProducts = () => {
           <label className="text-sm">Название</label>
           <input
             type="text"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.name ? "border-red-500" : ""}`}
             value={productForm.name}
             onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
             required
           />
           <label className="text-sm">Описание</label>
           <textarea
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.description ? "border-red-500" : ""}`}
             value={productForm.description}
             onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
             required
@@ -110,24 +120,24 @@ const AdminProducts = () => {
           <label className="text-sm">Цена</label>
           <input
             type="number"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.price ? "border-red-500" : ""}`}
             value={productForm.price}
             min={0}
-            onChange={(e) => setProductForm({ ...productForm, price: Number(e.target.value) })}
+            onChange={(e) => setProductForm({ ...productForm, price: e.target.value })}
             required
           />
           <label className="text-sm">Новая цена</label>
           <input
             type="number"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.newPrice ? "border-red-500" : ""}`}
             value={productForm.newPrice}
             min={0}
-            onChange={(e) => setProductForm({ ...productForm, newPrice: Number(e.target.value) })}
+            onChange={(e) => setProductForm({ ...productForm, newPrice: e.target.value })}
             required
           />
           <label className="text-sm">Бренд</label>
           <select
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.brand ? "border-red-500" : ""}`}
             value={productForm.brand}
             onChange={(e) => setProductForm({ ...productForm, brand: e.target.value })}
             required
@@ -141,7 +151,7 @@ const AdminProducts = () => {
           </select>
           <label className="text-sm">Категория</label>
           <select
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.category ? "border-red-500" : ""}`}
             value={productForm.category}
             onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
             required
@@ -155,7 +165,7 @@ const AdminProducts = () => {
           </select>
           <label className="text-sm">Пол</label>
           <select
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.gender ? "border-red-500" : ""}`}
             value={productForm.gender}
             onChange={(e) => setProductForm({ ...productForm, gender: e.target.value })}
             required
@@ -172,7 +182,7 @@ const AdminProducts = () => {
           <label className="text-sm">Вес</label>
           <input
             type="text"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.weight ? "border-red-500" : ""}`}
             value={productForm.weight}
             onChange={(e) => setProductForm({ ...productForm, weight: e.target.value })}
             required
@@ -180,21 +190,21 @@ const AdminProducts = () => {
           <label className="text-sm">Количество</label>
           <input
             type="number"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.quantity ? "border-red-500" : ""}`}
             value={productForm.quantity}
             min={0}
-            onChange={(e) => setProductForm({ ...productForm, quantity: Number(e.target.value) })}
+            onChange={(e) => setProductForm({ ...productForm, quantity: e.target.value })}
             required
           />
           <label className="text-sm">Рейтинг</label>
           <input
             type="number"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !productForm.rating ? "border-red-500" : ""}`}
             value={productForm.rating}
             step="0.1"
             min={0}
             max={5}
-            onChange={(e) => setProductForm({ ...productForm, rating: Number(e.target.value) })}
+            onChange={(e) => setProductForm({ ...productForm, rating: e.target.value })}
             required
           />
           <label className="inline-flex items-center gap-2">
@@ -231,27 +241,29 @@ const AdminProducts = () => {
             )}
           </div>
         </form>
-        <ul className="flex flex-col gap-2">
-          {displayedProducts.map((p) => (
-            <li key={p._id} className="border p-2 rounded flex justify-between">
-              <span>{p.name}</span>
-              <div className="flex gap-2">
-                <button className="text-blue-600" onClick={() => startEdit(p)}>
-                  <FaEdit />
-                </button>
-                <button className="text-red-600" onClick={() => deleteProduct(p._id)}>
-                  <FaTrash />
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <Pagination
-          currentPage={currentPage}
-          totalItems={allProducts.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={setCurrentPage}
-        />
+        <div className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2">
+            {displayedProducts.map((p) => (
+              <li key={p._id} className="border p-2 rounded flex justify-between">
+                <span>{p.name}</span>
+                <div className="flex gap-2">
+                  <button className="text-blue-600" onClick={() => startEdit(p)}>
+                    <FaEdit />
+                  </button>
+                  <button className="text-red-600" onClick={() => deleteProduct(p._id)}>
+                    <FaTrash />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            currentPage={currentPage}
+            totalItems={allProducts.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
     </div>
   );
