@@ -1,25 +1,15 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { HiOutlineShoppingBag } from "react-icons/hi";
+import { useNavigate, useParams } from "react-router-dom";
 import { BsBookmarkHeart, BsFillBookmarkHeartFill } from "react-icons/bs";
 
-import {
-  useAuthContext,
-  useCartContext,
-  useProductsContext,
-  useWishlistContext,
-} from "../contexts";
+import { useProductsContext, useWishlistContext } from "../contexts";
 import { getProductByIdService } from "../api/apiServices";
 import { StarRating } from "../components";
-import { notify } from "../utils/utils";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { productId } = useParams();
-  const { token } = useAuthContext();
   const { getProductById } = useProductsContext();
-  const { addProductToCart, disableCart } = useCartContext();
   const { addProductToWishlist, deleteProductFromWishlist, disableWish } =
     useWishlistContext();
   const product = getProductById(productId);
@@ -98,38 +88,13 @@ const ProductDetails = () => {
 
           <div className={`w-full   flex gap-4 items-center   flex-wrap  `}>
             <button
-              className="btn-rounded-secondary flex items-center gap-2 text-sm disabled:cursor-not-allowed"
-              disabled={disableCart}
-              onClick={() => {
-                if (!token) {
-                  navigate("/login", { state: { from: location.pathname } });
-                  notify("warn", "Пожалуйста, войдите, чтобы продолжить");
-                } else {
-                  if (!product?.inCart) {
-                    addProductToCart(product);
-                  } else {
-                    navigate("/cart");
-                  }
-                }
-              }}
-            >
-              <HiOutlineShoppingBag />{" "}
-              {product?.inCart ? "Перейти в корзину" : "Добавить в корзину"}
-            </button>
-
-            <button
               className="btn-rounded-primary rounded-full flex items-center gap-2 text-sm disabled:cursor-not-allowed"
               disabled={disableWish}
               onClick={() => {
-                if (!token) {
-                  navigate("/login", { state: { from: location.pathname } });
-                  notify("warn", "Пожалуйста, войдите, чтобы продолжить");
+                if (product?.inWish) {
+                  deleteProductFromWishlist(product._id);
                 } else {
-                  if (product?.inWish) {
-                    deleteProductFromWishlist(product._id);
-                  } else {
-                    addProductToWishlist(product);
-                  }
+                  addProductToWishlist(product);
                 }
               }}
             >
