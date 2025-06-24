@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import {
   adminAddProductService,
   adminDeleteProductService,
@@ -7,15 +8,21 @@ import {
 import { useAdminContext, useProductsContext } from "../contexts";
 
 const AdminProducts = () => {
-  const { token } = useAdminContext();
+  const { token, logout } = useAdminContext();
   const { allProducts, refreshProducts } = useProductsContext();
   const initialProduct = {
     _id: "",
     name: "",
+    description: "",
     price: 0,
     newPrice: 0,
     brand: "",
     category: "",
+    gender: "",
+    weight: "",
+    quantity: 0,
+    rating: 0,
+    trending: false,
     image: "",
   };
   const [productForm, setProductForm] = useState(initialProduct);
@@ -61,7 +68,10 @@ const AdminProducts = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-2xl font-semibold">Управление товарами</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold">Управление товарами</h2>
+        <button onClick={logout} className="btn-secondary">Выйти</button>
+      </div>
       <div className="grid md:grid-cols-2 gap-8">
         <form onSubmit={saveProduct} className="flex flex-col gap-2">
           <label className="text-sm">ID</label>
@@ -77,6 +87,12 @@ const AdminProducts = () => {
             className="border p-2 rounded"
             value={productForm.name}
             onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
+          />
+          <label className="text-sm">Описание</label>
+          <textarea
+            className="border p-2 rounded"
+            value={productForm.description}
+            onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
           />
           <label className="text-sm">Цена</label>
           <input
@@ -106,8 +122,54 @@ const AdminProducts = () => {
             value={productForm.category}
             onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
           />
+          <label className="text-sm">Пол</label>
+          <input
+            type="text"
+            className="border p-2 rounded"
+            value={productForm.gender}
+            onChange={(e) => setProductForm({ ...productForm, gender: e.target.value })}
+          />
+          <label className="text-sm">Вес</label>
+          <input
+            type="text"
+            className="border p-2 rounded"
+            value={productForm.weight}
+            onChange={(e) => setProductForm({ ...productForm, weight: e.target.value })}
+          />
+          <label className="text-sm">Количество</label>
+          <input
+            type="number"
+            className="border p-2 rounded"
+            value={productForm.quantity}
+            onChange={(e) => setProductForm({ ...productForm, quantity: Number(e.target.value) })}
+          />
+          <label className="text-sm">Рейтинг</label>
+          <input
+            type="number"
+            className="border p-2 rounded"
+            value={productForm.rating}
+            step="0.1"
+            onChange={(e) => setProductForm({ ...productForm, rating: Number(e.target.value) })}
+          />
+          <label className="inline-flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="mr-2"
+              checked={productForm.trending}
+              onChange={(e) => setProductForm({ ...productForm, trending: e.target.checked })}
+            />
+            Трендовый
+          </label>
           <label className="text-sm">Изображение</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <label className="file-label">
+            Выберите изображение
+            <input
+              type="file"
+              accept="image/*"
+              className="file-input"
+              onChange={handleImageChange}
+            />
+          </label>
           {productForm.image && (
             <img src={productForm.image} alt="preview" className="h-24 object-contain" />
           )}
@@ -128,10 +190,10 @@ const AdminProducts = () => {
               <span>{p.name}</span>
               <div className="flex gap-2">
                 <button className="text-blue-600" onClick={() => startEdit(p)}>
-                  Редактировать
+                  <FaEdit />
                 </button>
                 <button className="text-red-600" onClick={() => deleteProduct(p._id)}>
-                  Удалить
+                  <FaTrash />
                 </button>
               </div>
             </li>
