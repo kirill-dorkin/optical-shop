@@ -1,5 +1,4 @@
 import { BsBookmarkHeart } from "react-icons/bs";
-import { HiOutlineShoppingBag } from "react-icons/hi";
 
 const MenuDropdown = ({ navigate }) => {
   return (
@@ -10,9 +9,9 @@ const MenuDropdown = ({ navigate }) => {
             <BsBookmarkHeart className="text-lg me-3" /> Избранное
           </span>
         </li>
-        <li onClick={() => navigate("/cart")}>
+        <li onClick={() => navigate("/location")}>
           <span className="flex items-center px-5 py-3 hover:bg-amber-100 ">
-            <HiOutlineShoppingBag className="text-lg me-3" /> Корзина
+            📍 <span className="ms-3">Где купить</span>
           </span>
         </li>
       </ul>
