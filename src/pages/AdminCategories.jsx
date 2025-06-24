@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import {
   adminAddCategoryService,
   adminDeleteCategoryService,
@@ -83,7 +84,15 @@ const AdminCategories = () => {
             onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })}
           />
           <label className="text-sm">Изображение</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <label className="file-label">
+            Выберите изображение
+            <input
+              type="file"
+              accept="image/*"
+              className="file-input"
+              onChange={handleImageChange}
+            />
+          </label>
           {categoryForm.categoryImg && (
             <img src={categoryForm.categoryImg} alt="preview" className="h-24 object-contain" />
           )}
@@ -104,10 +113,10 @@ const AdminCategories = () => {
               <span>{c.categoryName}</span>
               <div className="flex gap-2">
                 <button className="text-blue-600" onClick={() => startEdit(c)}>
-                  Редактировать
+                  <FaEdit />
                 </button>
                 <button className="text-red-600" onClick={() => deleteCategory(c._id)}>
-                  Удалить
+                  <FaTrash />
                 </button>
               </div>
             </li>
