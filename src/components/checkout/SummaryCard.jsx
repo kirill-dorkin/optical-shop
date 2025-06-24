@@ -25,9 +25,9 @@ const SummaryCard = ({ setShowModal }) => {
               </div>
               <div className="">
                 <h2>{item.name}</h2>
-                <span>₹{item.newPrice}</span>
+                <span>{item.newPrice} сом</span>
                 <span className="text-sm text-gray-500 line-through px-2">
-                  ₹{item.price}
+                  {item.price} сом
                 </span>
               </div>
             </div>
@@ -46,7 +46,7 @@ const SummaryCard = ({ setShowModal }) => {
       <hr />
       <div className="flex justify-between items-center">
         <p className=" text-gray-600">Итого</p>
-        <p className="text-2xl">₹{totalPriceOfCartProducts}</p>
+        <p className="text-2xl">{totalPriceOfCartProducts} сом</p>
       </div>
 
       <div className="w-full py-2   flex gap-4 items-center">

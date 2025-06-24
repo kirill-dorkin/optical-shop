@@ -7,11 +7,11 @@ const PriceDetailsCard = ({
     { label: "Всего товаров", value: totalItems },
     {
       label: "Промежуточный итог",
-      value: `₹${actualPriceOfCart}`,
+      value: `${actualPriceOfCart} сом`,
     },
     {
       label: "Скидка",
-      value: `-₹${actualPriceOfCart - totalPriceOfCartProducts}`,
+      value: `-${actualPriceOfCart - totalPriceOfCartProducts} сом`,
     },
     {
       label: "Доставка",
