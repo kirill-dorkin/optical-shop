@@ -57,10 +57,3 @@
   animation-delay: 0.4s;
 }
 
-.letter:nth-child(6) {
-  animation-delay: 0.5s;
-}
-
-.letter:nth-child(7) {
-  animation-delay: 0.6s;
-}
