@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "16"
+  # You will also need to set REACT_APP_JWT_SECRET in the Netlify UI
