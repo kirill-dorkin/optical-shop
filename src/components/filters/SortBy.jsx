@@ -15,13 +15,13 @@ const SortBy = () => {
         onChange={(e) => applyFilters("sortBy", e.target.value)}
       >
         <option value="" defaultValue="" disabled>
-          Sort By Price
+          Сортировать по цене
         </option>
         <option value="low_to_high" className="">
-          Low to High
+          По возрастанию цены
         </option>
         <option value="high_to_low" className="">
-          High to Low
+          По убыванию цены
         </option>
       </select>
     </label>

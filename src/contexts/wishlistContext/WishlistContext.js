@@ -57,14 +57,14 @@ const WishlistContextProvider = ({ children }) => {
         });
         updateInCartOrInWish(product._id, "inWish", true);
       }
-      notify("success", "Added to wishlist");
+      notify("success", "Добавлено в избранное");
     } catch (err) {
       console.log(err);
       notify(
         "error",
-        err?.response?.data?.errors
-          ? err?.response?.data?.errors[0]
-          : "Some Error Occurred!!"
+          err?.response?.data?.errors
+            ? err?.response?.data?.errors[0]
+            : "Произошла ошибка!"
       );
     } finally {
       setDisableWish(false);
@@ -82,7 +82,7 @@ const WishlistContextProvider = ({ children }) => {
           payload: state.wishlist.filter(({ _id }) => _id !== productId),
         });
         updateInCartOrInWish(productId, "inWish", false);
-        notify("warn", "Removed from wishlist");
+        notify("warn", "Удалено из избранного");
       }
     } catch (err) {
       console.log(err);
@@ -90,7 +90,7 @@ const WishlistContextProvider = ({ children }) => {
         "error",
         err?.response?.data?.errors
           ? err?.response?.data?.errors[0]
-          : "Some Error Occurred!!"
+          : "Произошла ошибка!"
       );
     } finally {
       setDisableWish(false);

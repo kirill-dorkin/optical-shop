@@ -52,8 +52,8 @@ const Modal = ({ showModal, setShowModal }) => {
       key: "rzp_test_H2lv7MTHG3JATn",
       amount: totalPriceOfCartProducts * 100,
       currency: "KGS",
-      name: "Eyesome",
-      description: "Be awesome with eyesome :)",
+      name: "Оптика Стиль",
+      description: "Будь стильным с Оптикой Стиль :)",
       image: appLogo,
       handler: function () {
         clearCart();

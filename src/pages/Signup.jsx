@@ -65,7 +65,7 @@ const Signup = () => {
                 <input
                   type="text"
                   required
-                  placeholder="Username"
+                  placeholder="Имя пользователя"
                   className="border rounded-md p-1.5 shadow-sm"
                   value={userDetails.username}
                   onChange={(e) =>
@@ -77,7 +77,7 @@ const Signup = () => {
                 <input
                   type="email"
                   required
-                  placeholder="Email"
+                  placeholder="Электронная почта"
                   className="border rounded-md p-1.5 shadow-sm"
                   value={userDetails.email}
                   onChange={(e) =>
@@ -88,7 +88,7 @@ const Signup = () => {
               <label className="flex flex-col relative">
                 <input
                   required
-                  placeholder="Password"
+                  placeholder="Пароль"
                   type={showPassword.password ? "text" : "password"}
                   className="border rounded-md p-1.5 shadow-sm"
                   value={userDetails.password}
@@ -115,7 +115,7 @@ const Signup = () => {
               <label className="flex flex-col relative">
                 <input
                   required
-                  placeholder="Confirm Password"
+                  placeholder="Подтвердите пароль"
                   type={showPassword.confirmPassword ? "text" : "password"}
                   className="border rounded-md p-1.5 shadow-sm"
                   value={confirmPassword}
