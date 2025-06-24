@@ -1,22 +1,23 @@
 import Mockman from "mockman-js";
 
-import { Login, ProductDetails, ProductListing, Signup } from "../pages";
+import { ProductDetails, ProductListing, Wishlist, Location } from "../pages";
 
-const authRoutes = [
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
-];
+const authRoutes = [];
 
 const contentRoutes = [
   {
     path: "/products",
     element: <ProductListing />,
+  },
+
+  {
+    path: "/wishlist",
+    element: <Wishlist />,
+  },
+
+  {
+    path: "/location",
+    element: <Location />,
   },
 
   {

@@ -1,23 +1,12 @@
 import { GiRoundStar } from "react-icons/gi";
 import { BsBookmarkHeart, BsFillBookmarkHeartFill } from "react-icons/bs";
-import {
-  useAuthContext,
-  useCartContext,
-  useProductsContext,
-  useWishlistContext,
-} from "../../contexts";
-import { useLocation, useNavigate } from "react-router";
-import { notify } from "../../utils/utils";
+import { useWishlistContext } from "../../contexts";
+import { useNavigate } from "react-router";
 
 const SingleProduct = ({ product }) => {
-  const { token } = useAuthContext();
-  const { isInCart } = useProductsContext();
-  const { addProductToCart, disableCart } = useCartContext();
   const { addProductToWishlist, deleteProductFromWishlist, disableWish } =
     useWishlistContext();
   const navigate = useNavigate();
-  const location = useLocation();
-  let inCart = isInCart(product._id);
 
   return (
     <div
@@ -27,7 +16,7 @@ const SingleProduct = ({ product }) => {
       hover:scale-[1.02] hover:shadow-lg"
     >
       <div
-        className="bg-black/[0.075] h-28 xs:w-1/2 w-full sm:w-full"
+        className="bg-black/[0.075] h-40 xs:w-1/2 w-full sm:w-full"
         onClick={() => {
           navigate(`/product/${product._id}`);
         }}
@@ -57,38 +46,15 @@ const SingleProduct = ({ product }) => {
           </div>
           <p className="text-sm text-gray-600">{product.brand}</p>
         </div>
-        <div className="w-full pt-2 border-t flex justify-between items-center">
-          <button
-            className={`border border-[--primary-text-color]  py-1.5 text-sm  rounded-full px-6 hover:bg-[--primary-text-color] hover:text-white transition hover:shadow-md disabled:cursor-not-allowed`}
-            disabled={disableCart}
-            onClick={() => {
-              if (!token) {
-                navigate("/login", { state: { from: location.pathname } });
-                notify("warn", "Пожалуйста, войдите, чтобы продолжить");
-              } else {
-                if (!inCart) {
-                  addProductToCart(product);
-                } else {
-                  navigate("/cart");
-                }
-              }
-            }}
-          >
-            {inCart ? "Перейти в корзину" : "В корзину"}
-          </button>
+        <div className="w-full pt-2 border-t flex justify-end items-center">
           <button
             disabled={disableWish}
             className="disabled:cursor-not-allowed"
             onClick={() => {
-              if (!token) {
-                navigate("/login", { state: { from: location.pathname } });
-                notify("warn", "Пожалуйста, войдите, чтобы продолжить");
+              if (product?.inWish) {
+                deleteProductFromWishlist(product._id);
               } else {
-                if (product?.inWish) {
-                  deleteProductFromWishlist(product._id);
-                } else {
-                  addProductToWishlist(product);
-                }
+                addProductToWishlist(product);
               }
             }}
           >
