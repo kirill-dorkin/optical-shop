@@ -7,6 +7,7 @@ import {
   adminUpdateProductService,
 } from "../api/apiServices";
 import { useAdminContext, useProductsContext } from "../contexts";
+import { Pagination } from "../components";
 import { gendersList } from "../utils/constants";
 
 const AdminProducts = () => {
@@ -29,6 +30,8 @@ const AdminProducts = () => {
   });
   const [productForm, setProductForm] = useState(getNewProduct());
   const [isEditing, setIsEditing] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -50,11 +53,13 @@ const AdminProducts = () => {
     }
     setProductForm(getNewProduct());
     setIsEditing(false);
+    setCurrentPage(1);
     refreshProducts();
   };
 
   const deleteProduct = async (id) => {
     await adminDeleteProductService(id, token);
+    setCurrentPage(1);
     refreshProducts();
   };
 
@@ -67,6 +72,9 @@ const AdminProducts = () => {
     setProductForm(getNewProduct());
     setIsEditing(false);
   };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const displayedProducts = allProducts.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="flex flex-col gap-6">
@@ -82,6 +90,7 @@ const AdminProducts = () => {
             className="border p-2 rounded"
             value={productForm._id}
             onChange={(e) => setProductForm({ ...productForm, _id: e.target.value })}
+            required
           />
           <label className="text-sm">Название</label>
           <input
@@ -89,12 +98,14 @@ const AdminProducts = () => {
             className="border p-2 rounded"
             value={productForm.name}
             onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
+            required
           />
           <label className="text-sm">Описание</label>
           <textarea
             className="border p-2 rounded"
             value={productForm.description}
             onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
+            required
           />
           <label className="text-sm">Цена</label>
           <input
@@ -103,6 +114,7 @@ const AdminProducts = () => {
             value={productForm.price}
             min={0}
             onChange={(e) => setProductForm({ ...productForm, price: Number(e.target.value) })}
+            required
           />
           <label className="text-sm">Новая цена</label>
           <input
@@ -111,12 +123,14 @@ const AdminProducts = () => {
             value={productForm.newPrice}
             min={0}
             onChange={(e) => setProductForm({ ...productForm, newPrice: Number(e.target.value) })}
+            required
           />
           <label className="text-sm">Бренд</label>
           <select
             className="border p-2 rounded"
             value={productForm.brand}
             onChange={(e) => setProductForm({ ...productForm, brand: e.target.value })}
+            required
           >
             <option value="">Выберите бренд</option>
             {brandList.map((b) => (
@@ -130,6 +144,7 @@ const AdminProducts = () => {
             className="border p-2 rounded"
             value={productForm.category}
             onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
+            required
           >
             <option value="">Выберите категорию</option>
             {categoryList.map((c) => (
@@ -143,6 +158,7 @@ const AdminProducts = () => {
             className="border p-2 rounded"
             value={productForm.gender}
             onChange={(e) => setProductForm({ ...productForm, gender: e.target.value })}
+            required
           >
             <option value="">Выберите пол</option>
             {gendersList
@@ -159,6 +175,7 @@ const AdminProducts = () => {
             className="border p-2 rounded"
             value={productForm.weight}
             onChange={(e) => setProductForm({ ...productForm, weight: e.target.value })}
+            required
           />
           <label className="text-sm">Количество</label>
           <input
@@ -167,6 +184,7 @@ const AdminProducts = () => {
             value={productForm.quantity}
             min={0}
             onChange={(e) => setProductForm({ ...productForm, quantity: Number(e.target.value) })}
+            required
           />
           <label className="text-sm">Рейтинг</label>
           <input
@@ -177,6 +195,7 @@ const AdminProducts = () => {
             min={0}
             max={5}
             onChange={(e) => setProductForm({ ...productForm, rating: Number(e.target.value) })}
+            required
           />
           <label className="inline-flex items-center gap-2">
             <input
@@ -195,6 +214,7 @@ const AdminProducts = () => {
               accept="image/*"
               className="file-input"
               onChange={handleImageChange}
+              required
             />
           </label>
           {productForm.image && (
@@ -212,7 +232,7 @@ const AdminProducts = () => {
           </div>
         </form>
         <ul className="flex flex-col gap-2">
-          {allProducts.map((p) => (
+          {displayedProducts.map((p) => (
             <li key={p._id} className="border p-2 rounded flex justify-between">
               <span>{p.name}</span>
               <div className="flex gap-2">
@@ -226,6 +246,12 @@ const AdminProducts = () => {
             </li>
           ))}
         </ul>
+        <Pagination
+          currentPage={currentPage}
+          totalItems={allProducts.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );

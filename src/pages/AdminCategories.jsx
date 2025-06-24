@@ -7,6 +7,7 @@ import {
   adminUpdateCategoryService,
 } from "../api/apiServices";
 import { useAdminContext, useProductsContext } from "../contexts";
+import { Pagination } from "../components";
 
 const AdminCategories = () => {
   const { token } = useAdminContext();
@@ -19,6 +20,8 @@ const AdminCategories = () => {
   });
   const [categoryForm, setCategoryForm] = useState(getNewCategory());
   const [isEditing, setIsEditing] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -40,11 +43,13 @@ const AdminCategories = () => {
     }
     setCategoryForm(getNewCategory());
     setIsEditing(false);
+    setCurrentPage(1);
     refreshCategories();
   };
 
   const deleteCategory = async (id) => {
     await adminDeleteCategoryService(id, token);
+    setCurrentPage(1);
     refreshCategories();
   };
 
@@ -58,6 +63,12 @@ const AdminCategories = () => {
     setIsEditing(false);
   };
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const displayedCategories = categoryList.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-2xl font-semibold">Управление категориями</h2>
@@ -69,6 +80,7 @@ const AdminCategories = () => {
             className="border p-2 rounded"
             value={categoryForm._id}
             onChange={(e) => setCategoryForm({ ...categoryForm, _id: e.target.value })}
+            required
           />
           <label className="text-sm">Название</label>
           <input
@@ -76,6 +88,7 @@ const AdminCategories = () => {
             className="border p-2 rounded"
             value={categoryForm.categoryName}
             onChange={(e) => setCategoryForm({ ...categoryForm, categoryName: e.target.value })}
+            required
           />
           <label className="text-sm">Описание</label>
           <input
@@ -83,6 +96,7 @@ const AdminCategories = () => {
             className="border p-2 rounded"
             value={categoryForm.description}
             onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })}
+            required
           />
           <label className="text-sm">Изображение</label>
           <label className="file-label">
@@ -92,6 +106,7 @@ const AdminCategories = () => {
               accept="image/*"
               className="file-input"
               onChange={handleImageChange}
+              required
             />
           </label>
           {categoryForm.categoryImg && (
@@ -109,7 +124,7 @@ const AdminCategories = () => {
           </div>
         </form>
         <ul className="flex flex-col gap-2">
-          {categoryList.map((c) => (
+          {displayedCategories.map((c) => (
             <li key={c._id} className="border p-2 rounded flex justify-between">
               <span>{c.categoryName}</span>
               <div className="flex gap-2">
@@ -123,6 +138,12 @@ const AdminCategories = () => {
             </li>
           ))}
         </ul>
+        <Pagination
+          currentPage={currentPage}
+          totalItems={categoryList.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );

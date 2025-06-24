@@ -32,6 +32,7 @@ const AdminLogin = () => {
                 onChange={(e) =>
                   setCredentials({ ...credentials, username: e.target.value })
                 }
+                required
               />
             </label>
             <label className="flex flex-col">
@@ -43,6 +44,7 @@ const AdminLogin = () => {
                 onChange={(e) =>
                   setCredentials({ ...credentials, password: e.target.value })
                 }
+                required
               />
             </label>
             <button

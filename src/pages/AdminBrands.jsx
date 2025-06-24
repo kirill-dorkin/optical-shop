@@ -6,6 +6,7 @@ import {
   adminUpdateBrandService,
 } from "../api/apiServices";
 import { useAdminContext, useProductsContext } from "../contexts";
+import { Pagination } from "../components";
 import { v4 as uuid } from "uuid";
 
 const AdminBrands = () => {
@@ -14,6 +15,8 @@ const AdminBrands = () => {
   const getNewBrand = () => ({ _id: uuid(), brandName: "" });
   const [brandForm, setBrandForm] = useState(getNewBrand());
   const [isEditing, setIsEditing] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const saveBrand = async (e) => {
     e.preventDefault();
@@ -24,11 +27,13 @@ const AdminBrands = () => {
     }
     setBrandForm(getNewBrand());
     setIsEditing(false);
+    setCurrentPage(1);
     refreshBrands();
   };
 
   const deleteBrand = async (id) => {
     await adminDeleteBrandService(id, token);
+    setCurrentPage(1);
     refreshBrands();
   };
 
@@ -46,6 +51,9 @@ const AdminBrands = () => {
     refreshBrands();
   }, []);
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const displayedBrands = brandList.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-2xl font-semibold">Бренды</h2>
@@ -57,6 +65,7 @@ const AdminBrands = () => {
             className="border p-2 rounded"
             value={brandForm._id}
             onChange={(e) => setBrandForm({ ...brandForm, _id: e.target.value })}
+            required
           />
           <label className="text-sm">Название</label>
           <input
@@ -64,6 +73,7 @@ const AdminBrands = () => {
             className="border p-2 rounded"
             value={brandForm.brandName}
             onChange={(e) => setBrandForm({ ...brandForm, brandName: e.target.value })}
+            required
           />
           <div className="flex gap-2 mt-2">
             <button className="btn-primary" type="submit">
@@ -77,7 +87,7 @@ const AdminBrands = () => {
           </div>
         </form>
         <ul className="flex flex-col gap-2">
-          {brandList.map((b) => (
+          {displayedBrands.map((b) => (
             <li key={b._id} className="border p-2 rounded flex justify-between">
               <span>{b.brandName}</span>
               <div className="flex gap-2">
@@ -91,6 +101,12 @@ const AdminBrands = () => {
             </li>
           ))}
         </ul>
+        <Pagination
+          currentPage={currentPage}
+          totalItems={brandList.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );
