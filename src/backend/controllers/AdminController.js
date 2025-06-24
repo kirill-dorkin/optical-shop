@@ -1,5 +1,6 @@
 import { Response } from "miragejs";
 import jwt_decode from "jwt-decode";
+import { persistDb } from "../utils/persistDb";
 const sign = require("jwt-encode");
 
 const isAdminAuthenticated = (request) => {
@@ -30,6 +31,7 @@ export const addProductHandler = function (schema, request) {
   }
   const newProduct = JSON.parse(request.requestBody);
   const createdProduct = schema.products.create(newProduct);
+  persistDb(schema);
   return new Response(201, {}, { product: createdProduct.attrs });
 };
 
@@ -44,6 +46,7 @@ export const updateProductHandler = function (schema, request) {
     return new Response(404, {}, { errors: ["Product not found"] });
   }
   product.update(updatedAttrs);
+  persistDb(schema);
   return new Response(200, {}, { product: product.attrs });
 };
 
@@ -57,6 +60,7 @@ export const deleteProductHandler = function (schema, request) {
     return new Response(404, {}, { errors: ["Product not found"] });
   }
   product.destroy();
+  persistDb(schema);
   return new Response(200, {}, { message: "Product deleted" });
 };
 
@@ -66,6 +70,7 @@ export const addCategoryHandler = function (schema, request) {
   }
   const newCategory = JSON.parse(request.requestBody);
   const createdCategory = schema.categories.create(newCategory);
+  persistDb(schema);
   return new Response(201, {}, { category: createdCategory.attrs });
 };
 
@@ -80,6 +85,7 @@ export const updateCategoryHandler = function (schema, request) {
     return new Response(404, {}, { errors: ["Category not found"] });
   }
   category.update(updatedAttrs);
+  persistDb(schema);
   return new Response(200, {}, { category: category.attrs });
 };
 
@@ -93,6 +99,7 @@ export const deleteCategoryHandler = function (schema, request) {
     return new Response(404, {}, { errors: ["Category not found"] });
   }
   category.destroy();
+  persistDb(schema);
   return new Response(200, {}, { message: "Category deleted" });
 };
 
@@ -102,6 +109,7 @@ export const addBrandHandler = function (schema, request) {
   }
   const newBrand = JSON.parse(request.requestBody);
   const createdBrand = schema.brands.create(newBrand);
+  persistDb(schema);
   return new Response(201, {}, { brand: createdBrand.attrs });
 };
 
@@ -116,6 +124,7 @@ export const updateBrandHandler = function (schema, request) {
     return new Response(404, {}, { errors: ["Brand not found"] });
   }
   brand.update(updatedAttrs);
+  persistDb(schema);
   return new Response(200, {}, { brand: brand.attrs });
 };
 
@@ -129,5 +138,6 @@ export const deleteBrandHandler = function (schema, request) {
     return new Response(404, {}, { errors: ["Brand not found"] });
   }
   brand.destroy();
+  persistDb(schema);
   return new Response(200, {}, { message: "Brand deleted" });
 };
