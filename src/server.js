@@ -13,6 +13,7 @@ import {
   getAllCategoriesHandler,
   getCategoryHandler,
 } from "./backend/controllers/CategoryController";
+import { getAllBrandsHandler } from "./backend/controllers/BrandController";
 import {
   getAllProductsHandler,
   getProductHandler,
@@ -30,10 +31,14 @@ import {
   addCategoryHandler,
   updateCategoryHandler,
   deleteCategoryHandler,
+  addBrandHandler,
+  updateBrandHandler,
+  deleteBrandHandler,
 } from "./backend/controllers/AdminController";
 import { categories } from "./backend/db/categories";
 import { products } from "./backend/db/products";
 import { users } from "./backend/db/users";
+import { brands } from "./backend/db/brands";
 
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
@@ -44,6 +49,7 @@ export function makeServer({ environment = "development" } = {}) {
     models: {
       product: Model,
       category: Model,
+      brand: Model,
       user: Model,
       cart: Model,
       wishlist: Model,
@@ -62,6 +68,7 @@ export function makeServer({ environment = "development" } = {}) {
       );
 
       categories.forEach((item) => server.create("category", { ...item }));
+      brands.forEach((item) => server.create("brand", { ...item }));
     },
 
     routes() {
@@ -77,6 +84,9 @@ export function makeServer({ environment = "development" } = {}) {
       // categories routes (public)
       this.get("/categories", getAllCategoriesHandler.bind(this));
       this.get("/categories/:categoryId", getCategoryHandler.bind(this));
+
+      // brands routes (public)
+      this.get("/brands", getAllBrandsHandler.bind(this));
 
       // cart routes (private)
       this.get("/user/cart", getCartItemsHandler.bind(this));
@@ -111,6 +121,16 @@ export function makeServer({ environment = "development" } = {}) {
       this.delete(
         "/admin/categories/:categoryId",
         deleteCategoryHandler.bind(this)
+      );
+
+      this.post("/admin/brands", addBrandHandler.bind(this));
+      this.put(
+        "/admin/brands/:brandId",
+        updateBrandHandler.bind(this)
+      );
+      this.delete(
+        "/admin/brands/:brandId",
+        deleteBrandHandler.bind(this)
       );
     },
   });

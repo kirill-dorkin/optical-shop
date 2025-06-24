@@ -10,6 +10,7 @@ export const PRODUCTS_URL = `${baseUrl}/products`;
 
 //category url
 export const CATEGORIES_URL = `${baseUrl}/categories`;
+export const BRANDS_URL = `${baseUrl}/brands`;
 
 //cart url
 export const CART_URL = `${baseUrl}/user/cart`;
@@ -21,3 +22,4 @@ export const WISHLIST_URL = `${baseUrl}/user/wishlist`;
 export const ADMIN_LOGIN_URL = `${baseUrl}/admin/login`;
 export const ADMIN_PRODUCTS_URL = `${baseUrl}/admin/products`;
 export const ADMIN_CATEGORIES_URL = `${baseUrl}/admin/categories`;
+export const ADMIN_BRANDS_URL = `${baseUrl}/admin/brands`;

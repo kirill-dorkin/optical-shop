@@ -13,6 +13,7 @@ import {
   AdminHome,
   AdminProducts,
   AdminCategories,
+  AdminBrands,
 } from "../pages";
 import AdminLayout from "./AdminLayout";
 import { useAuthContext, useAdminContext } from "../contexts";
@@ -46,6 +47,7 @@ const Index = () => {
         <Route path="/admin" element={<AdminHome />} index />
         <Route path="/admin/products" element={<AdminProducts />} />
         <Route path="/admin/categories" element={<AdminCategories />} />
+        <Route path="/admin/brands" element={<AdminBrands />} />
       </Route>
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route element={<SharedLayout />}>
