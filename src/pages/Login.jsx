@@ -48,7 +48,7 @@ const Login = () => {
               onSubmit={handleSubmit}
             >
               <label className="flex flex-col">
-                Email
+                Электронная почта
                 <input
                   type="email"
                   className="border rounded-md p-1.5 shadow-sm"
@@ -62,7 +62,7 @@ const Login = () => {
                 />
               </label>
               <label className="flex flex-col">
-                Password
+                Пароль
                 <input
                   type="password"
                   className="border rounded-md p-1.5 shadow-sm"

@@ -64,7 +64,7 @@ const CartContextProvider = ({ children }) => {
           payload: [{ ...product, qty: 1 }, ...state.cart],
         });
         updateInCartOrInWish(product._id, "inCart", true);
-        notify("success", "Product Added to Bag");
+        notify("success", "Товар добавлен в корзину");
       }
 
       console.log({ response });
@@ -74,7 +74,7 @@ const CartContextProvider = ({ children }) => {
         "error",
         err?.response?.data?.errors
           ? err?.response?.data?.errors[0]
-          : "Some Error Occurred!!"
+          : "Произошла ошибка!"
       );
     } finally {
       setDisableCart(false);
@@ -118,7 +118,7 @@ const CartContextProvider = ({ children }) => {
         "error",
         err?.response?.data?.errors
           ? err?.response?.data?.errors[0]
-          : "Some Error Occurred!!"
+          : "Произошла ошибка!"
       );
     } finally {
       setDisableCart(false);
@@ -135,7 +135,7 @@ const CartContextProvider = ({ children }) => {
           payload: response.data.cart,
         });
         updateInCartOrInWish(productId, "inCart", false);
-        notify("info", "Product Removed from Bag");
+        notify("info", "Товар удалён из корзины");
       }
     } catch (err) {
       console.log(err);
@@ -143,7 +143,7 @@ const CartContextProvider = ({ children }) => {
         "error",
         err?.response?.data?.errors
           ? err?.response?.data?.errors[0]
-          : "Some Error Occurred!!"
+          : "Произошла ошибка!"
       );
     } finally {
       setDisableCart(false);
@@ -165,7 +165,7 @@ const CartContextProvider = ({ children }) => {
           "error",
           err?.response?.data?.errors
             ? err?.response?.data?.errors[0]
-            : "Some Error Occurred!!"
+            : "Произошла ошибка!"
         );
       }
     });

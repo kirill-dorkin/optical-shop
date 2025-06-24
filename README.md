@@ -1,10 +1,10 @@
-# <h1 align="center"> Eyesome </h1>
-<h3 align="center">Eyesome is a platform dedicated to providing a seamless shopping experience for eyewear products.</h3>
+# <h1 align="center"> Оптика «Стиль» </h1>
+<h3 align="center">Интернет-витрина магазина «Оптика Стиль» из центра Бишкека.</h3>
 <br/>
 
 ## Getting Started
 
-To run the Eyesome ecommerce web application locally, follow these steps:
+To run the «Оптика Стиль» ecommerce web application locally, follow these steps:
 
 1. Clone the repository and navigate into the project directory:
    ```bash

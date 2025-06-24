@@ -30,7 +30,7 @@ const AuthContextProvider = ({ children }) => {
           JSON.stringify(response?.data?.createdUser)
         );
         setToken(response?.data?.encodedToken);
-        notify("success", "Signed Up Successfully!!");
+        notify("success", "Регистрация прошла успешно!");
       }
     } catch (err) {
       console.log(err);
@@ -38,7 +38,7 @@ const AuthContextProvider = ({ children }) => {
         "error",
         err?.response?.data?.errors
           ? err?.response?.data?.errors[0]
-          : "Some Error Occurred!!"
+          : "Произошла ошибка!"
       );
     } finally {
       setSigningUp(false);
@@ -57,7 +57,7 @@ const AuthContextProvider = ({ children }) => {
           JSON.stringify(response?.data?.foundUser)
         );
         setToken(response?.data?.encodedToken);
-        notify("success", "Logged In Successfully!!");
+        notify("success", "Успешный вход!");
       }
     } catch (err) {
       console.log(err);
@@ -65,7 +65,7 @@ const AuthContextProvider = ({ children }) => {
         "error",
         err?.response?.data?.errors
           ? err?.response?.data?.errors[0]
-          : "Some Error Occurred!!"
+          : "Произошла ошибка!"
       );
     } finally {
       setLoggingIn(false);
@@ -76,7 +76,7 @@ const AuthContextProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("userInfo");
     setToken(null);
-    notify("info", "Logged out successfully!!", 100);
+    notify("info", "Вы успешно вышли!", 100);
   };
   return (
     <AuthContext.Provider
