@@ -6,8 +6,6 @@ import "./index.css";
 import App from "./App";
 import { makeServer } from "./server";
 import {
-  AuthContextProvider,
-  CartContextProvider,
   ProductsContextProvider,
   WishlistContextProvider,
   AdminContextProvider,
@@ -20,17 +18,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AdminContextProvider>
-      <AuthContextProvider>
-        <ProductsContextProvider>
-          <CartContextProvider>
-            <WishlistContextProvider>
-              <Router>
-                <App />
-              </Router>
-            </WishlistContextProvider>
-          </CartContextProvider>
-        </ProductsContextProvider>
-      </AuthContextProvider>
+      <ProductsContextProvider>
+        <WishlistContextProvider>
+          <Router>
+            <App />
+          </Router>
+        </WishlistContextProvider>
+      </ProductsContextProvider>
     </AdminContextProvider>
   </React.StrictMode>
 );

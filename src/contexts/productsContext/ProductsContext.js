@@ -10,12 +10,13 @@ import {
   addressTypes,
   filterTypes,
 } from "../../utils/actionTypes";
-import { useAuthContext } from "..";
+// Auth context was removed when the site became catalogue-only so
+// imports relying on authentication should be cleaned up. The products
+// context no longer depends on any auth token.
 
 export const ProductsContext = createContext();
 
 const ProductsContextProvider = ({ children }) => {
-  const { token } = useAuthContext();
   const [loading, setLoading] = useState(false);
 
   const [state, dispatch] = useReducer(productsReducer, initialState);
@@ -107,7 +108,7 @@ const ProductsContextProvider = ({ children }) => {
         setLoading(false);
       }
     })();
-  }, [token]);
+  }, []);
 
   const getProductById = (productId) =>
     state.allProducts.find((product) => product._id === productId);
