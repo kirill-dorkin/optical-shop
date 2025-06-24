@@ -6,6 +6,7 @@ import {
   adminDeleteCategoryService,
 } from "../api/apiServices";
 import { useAdminContext, useProductsContext } from "../contexts";
+import { Pagination } from "../components";
 import { useNavigate } from "react-router";
 
 const AdminDashboard = () => {
@@ -28,6 +29,9 @@ const AdminDashboard = () => {
     description: "",
     categoryImg: "",
   });
+  const [currentProductPage, setCurrentProductPage] = useState(1);
+  const [currentCategoryPage, setCurrentCategoryPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     if (!token) {
@@ -47,21 +51,30 @@ const AdminDashboard = () => {
       category: "",
       image: "",
     });
+    setCurrentProductPage(1);
   };
 
   const addCategory = async (e) => {
     e.preventDefault();
     await adminAddCategoryService(categoryForm, token);
     setCategoryForm({ _id: "", categoryName: "", description: "", categoryImg: "" });
+    setCurrentCategoryPage(1);
   };
 
   const deleteProduct = async (id) => {
     await adminDeleteProductService(id, token);
+    setCurrentProductPage(1);
   };
 
   const deleteCategory = async (id) => {
     await adminDeleteCategoryService(id, token);
+    setCurrentCategoryPage(1);
   };
+
+  const productStart = (currentProductPage - 1) * itemsPerPage;
+  const displayedProducts = allProducts.slice(productStart, productStart + itemsPerPage);
+  const categoryStart = (currentCategoryPage - 1) * itemsPerPage;
+  const displayedCategories = categoryList.slice(categoryStart, categoryStart + itemsPerPage);
 
   return (
     <div className="p-6 flex flex-col gap-8">
@@ -81,6 +94,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={productForm._id}
               onChange={(e) => setProductForm({ ...productForm, _id: e.target.value })}
+              required
             />
             <input
               type="text"
@@ -88,6 +102,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={productForm.name}
               onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
+              required
             />
             <input
               type="number"
@@ -95,6 +110,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={productForm.price}
               onChange={(e) => setProductForm({ ...productForm, price: Number(e.target.value) })}
+              required
             />
             <input
               type="number"
@@ -102,6 +118,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={productForm.newPrice}
               onChange={(e) => setProductForm({ ...productForm, newPrice: Number(e.target.value) })}
+              required
             />
             <input
               type="text"
@@ -109,6 +126,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={productForm.brand}
               onChange={(e) => setProductForm({ ...productForm, brand: e.target.value })}
+              required
             />
             <input
               type="text"
@@ -116,6 +134,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={productForm.category}
               onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
+              required
             />
             <input
               type="text"
@@ -123,6 +142,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={productForm.image}
               onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
+              required
             />
             <button className="btn-primary mt-2">Добавить</button>
           </form>
@@ -136,6 +156,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={categoryForm._id}
               onChange={(e) => setCategoryForm({ ...categoryForm, _id: e.target.value })}
+              required
             />
             <input
               type="text"
@@ -143,6 +164,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={categoryForm.categoryName}
               onChange={(e) => setCategoryForm({ ...categoryForm, categoryName: e.target.value })}
+              required
             />
             <input
               type="text"
@@ -150,6 +172,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={categoryForm.description}
               onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })}
+              required
             />
             <input
               type="text"
@@ -157,6 +180,7 @@ const AdminDashboard = () => {
               className="border p-2 rounded"
               value={categoryForm.categoryImg}
               onChange={(e) => setCategoryForm({ ...categoryForm, categoryImg: e.target.value })}
+              required
             />
             <button className="btn-primary mt-2">Добавить</button>
           </form>
@@ -165,7 +189,7 @@ const AdminDashboard = () => {
       <section>
         <h2 className="text-xl font-semibold mb-2">Товары</h2>
         <ul className="flex flex-col gap-2">
-          {allProducts.map((p) => (
+          {displayedProducts.map((p) => (
             <li key={p._id} className="border p-2 rounded flex justify-between">
               <span>{p.name}</span>
               <button className="text-red-600" onClick={() => deleteProduct(p._id)}>
@@ -174,11 +198,17 @@ const AdminDashboard = () => {
             </li>
           ))}
         </ul>
+        <Pagination
+          currentPage={currentProductPage}
+          totalItems={allProducts.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentProductPage}
+        />
       </section>
       <section>
         <h2 className="text-xl font-semibold mb-2">Категории</h2>
         <ul className="flex flex-col gap-2">
-          {categoryList.map((c) => (
+          {displayedCategories.map((c) => (
             <li key={c._id} className="border p-2 rounded flex justify-between">
               <span>{c.categoryName}</span>
               <button className="text-red-600" onClick={() => deleteCategory(c._id)}>
@@ -187,6 +217,12 @@ const AdminDashboard = () => {
             </li>
           ))}
         </ul>
+        <Pagination
+          currentPage={currentCategoryPage}
+          totalItems={categoryList.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentCategoryPage}
+        />
       </section>
     </div>
   );
