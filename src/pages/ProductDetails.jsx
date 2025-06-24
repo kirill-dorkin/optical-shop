@@ -65,25 +65,25 @@ const ProductDetails = () => {
           </div>
 
           <div className="flex flex-col gap-2  ">
-            <h2 className="  text-lg font-semibold">About Product</h2>
+            <h2 className="  text-lg font-semibold">О товаре</h2>
             <ul className="flex gap-5">
               <div>
                 <li>
-                  <span className="text-gray-500 text-sm">Brand: </span>
+                  <span className="text-gray-500 text-sm">Бренд: </span>
                   {product?.brand}
                 </li>
                 <li>
-                  <span className="text-gray-500 text-sm">Category: </span>
+                  <span className="text-gray-500 text-sm">Категория: </span>
                   {product?.category}
                 </li>
               </div>
               <div>
                 <li>
-                  <span className="text-gray-500 text-sm">Gender: </span>
+                  <span className="text-gray-500 text-sm">Пол: </span>
                   {product?.gender}
                 </li>
                 <li>
-                  <span className="text-gray-500 text-sm">Heavy: </span>
+                  <span className="text-gray-500 text-sm">Вес: </span>
                   {product?.weight}
                 </li>
               </div>
@@ -107,7 +107,7 @@ const ProductDetails = () => {
               onClick={() => {
                 if (!token) {
                   navigate("/login", { state: { from: location.pathname } });
-                  notify("warn", "Please Login to continue");
+                  notify("warn", "Пожалуйста, войдите, чтобы продолжить");
                 } else {
                   if (!product?.inCart) {
                     addProductToCart(product);
@@ -118,7 +118,7 @@ const ProductDetails = () => {
               }}
             >
               <HiOutlineShoppingBag />{" "}
-              {product?.inCart ? "Go to Bag" : "Add to Bag"}
+              {product?.inCart ? "Перейти в корзину" : "Добавить в корзину"}
             </button>
 
             <button
@@ -127,7 +127,7 @@ const ProductDetails = () => {
               onClick={() => {
                 if (!token) {
                   navigate("/login", { state: { from: location.pathname } });
-                  notify("warn", "Please Login to continue");
+                  notify("warn", "Пожалуйста, войдите, чтобы продолжить");
                 } else {
                   if (product?.inWish) {
                     deleteProductFromWishlist(product._id);
@@ -140,12 +140,12 @@ const ProductDetails = () => {
               {product?.inWish ? (
                 <>
                   <BsFillBookmarkHeartFill />
-                  <span>Remove from Wishlist</span>
+                  <span>Убрать из избранного</span>
                 </>
               ) : (
                 <>
                   {" "}
-                  <BsBookmarkHeart /> <span>Wishlist Item</span>
+                  <BsBookmarkHeart /> <span>В избранное</span>
                 </>
               )}{" "}
             </button>

@@ -54,7 +54,7 @@ const Signup = () => {
         <section className="px-10 py-10 rounded-md shadow-md bg-white/[0.7] flex flex-col gap-6 w-full max-w-lg">
           <Logo />
           <div className="flex flex-col gap-2 ">
-            <h1 className="text-4xl font-bold mb-3">Sign up</h1>
+            <h1 className="text-4xl font-bold mb-3">Зарегистрироваться</h1>
 
             <form
               action=""
@@ -145,7 +145,7 @@ const Signup = () => {
                       : "invisible"
                   }`}
                 >
-                  Password Mismatch
+                  Пароли не совпадают
                 </p>
               </label>
               <div className="w-full py-2   flex flex-col gap-4 items-center">
@@ -154,16 +154,16 @@ const Signup = () => {
                   className="btn-primary w-2/3 text-lg text-center"
                   disabled={isDisabled}
                 >
-                  {signingUp ? "Signing up..." : "Create Account"}
+                  {signingUp ? "Регистрация..." : "Создать аккаунт"}
                 </button>
                 <p className="text-gray-600 text-sm">
-                  Already have an account?{" "}
+                  Уже есть аккаунт?{" "}
                   <Link
                     to="/login"
                     className="underline text-base
             "
                   >
-                    Login
+                    Войти
                   </Link>
                 </p>
               </div>

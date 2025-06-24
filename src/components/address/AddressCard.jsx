@@ -36,7 +36,7 @@ const AddressCard = ({
           {city},{pincode}
         </p>
         <p className="text-sm text-gray-500">
-          Mobile:
+          Телефон:
           <span className="font-semibold ps-1 break-all">{mobile}</span>
         </p>
         {isEdit && (
@@ -48,13 +48,13 @@ const AddressCard = ({
                 setShowAddressForm(true);
               }}
             >
-              Edit
+              Редактировать
             </button>
             <button
               className="text-red-600 font-bold"
               onClick={() => deleteAddress(id)}
             >
-              Remove
+              Удалить
             </button>
           </div>
         )}

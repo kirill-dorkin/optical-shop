@@ -4,18 +4,18 @@ const PriceDetailsCard = ({
   totalPriceOfCartProducts,
 }) => {
   const summaryData = [
-    { label: "Total Products", value: totalItems },
+    { label: "Всего товаров", value: totalItems },
     {
-      label: "Subtotal",
+      label: "Промежуточный итог",
       value: `₹${actualPriceOfCart}`,
     },
     {
-      label: "Discount",
+      label: "Скидка",
       value: `-₹${actualPriceOfCart - totalPriceOfCartProducts}`,
     },
     {
-      label: "Delivery Charges",
-      value: "Free",
+      label: "Доставка",
+      value: "Бесплатно",
     },
   ];
 

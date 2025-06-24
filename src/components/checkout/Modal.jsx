@@ -82,7 +82,7 @@ const Modal = ({ showModal, setShowModal }) => {
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-xl font-semibold">Order Summary</h3>
+                  <h3 className="text-xl font-semibold">Сводка заказа</h3>
                   <button className="p-1" onClick={() => setShowModal(false)}>
                     <AiOutlineClose />
                   </button>
@@ -101,7 +101,7 @@ const Modal = ({ showModal, setShowModal }) => {
                     {disableBtn ? (
                       <img src={spinningLoader} alt="" height={20} />
                     ) : (
-                      <span>Confirm Order</span>
+                      <span>Подтвердить заказ</span>
                     )}
                   </button>
                 </div>
