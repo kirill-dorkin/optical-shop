@@ -30,11 +30,11 @@ const TrendingCard = ({ product }) => {
           <p className="text-gray-600 text-sm text-end">{product.category}</p>
         </div>
       </div>
-      <div className="flex justify-center items-center w-full h-full rounded-md bg-gradient-to-br from-white to-gray-200">
+      <div className="flex justify-center items-center w-full h-48 md:h-56 rounded-md">
         <img
           src={product.image}
           alt={product.name}
-          className="w-32 h-20 xs:w-28 xs:h-16 sm:w-32 sm:h-20 py-2 object-contain hover:scale-110 transition"
+          className="h-full object-contain hover:scale-110 transition"
         />
       </div>
     </Link>
