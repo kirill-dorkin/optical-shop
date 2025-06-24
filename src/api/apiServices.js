@@ -6,9 +6,11 @@ import {
   SIGNUP_URL,
   WISHLIST_URL,
   CATEGORIES_URL,
+  BRANDS_URL,
   ADMIN_LOGIN_URL,
   ADMIN_PRODUCTS_URL,
   ADMIN_CATEGORIES_URL,
+  ADMIN_BRANDS_URL,
 } from "./apiUrls";
 
 export const loginService = (email, password) =>
@@ -120,5 +122,20 @@ export const adminUpdateCategoryService = (categoryId, category, token) =>
 
 export const adminDeleteCategoryService = (categoryId, token) =>
   axios.delete(`${ADMIN_CATEGORIES_URL}/${categoryId}`, {
+    headers: { authorization: token },
+  });
+
+export const getAllBrandsService = () => axios.get(BRANDS_URL);
+
+export const adminAddBrandService = (brand, token) =>
+  axios.post(ADMIN_BRANDS_URL, brand, { headers: { authorization: token } });
+
+export const adminUpdateBrandService = (brandId, brand, token) =>
+  axios.put(`${ADMIN_BRANDS_URL}/${brandId}`, brand, {
+    headers: { authorization: token },
+  });
+
+export const adminDeleteBrandService = (brandId, token) =>
+  axios.delete(`${ADMIN_BRANDS_URL}/${brandId}`, {
     headers: { authorization: token },
   });

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import {
   adminAddProductService,
@@ -6,12 +7,13 @@ import {
   adminUpdateProductService,
 } from "../api/apiServices";
 import { useAdminContext, useProductsContext } from "../contexts";
+import { gendersList } from "../utils/constants";
 
 const AdminProducts = () => {
   const { token, logout } = useAdminContext();
-  const { allProducts, refreshProducts } = useProductsContext();
-  const initialProduct = {
-    _id: "",
+  const { allProducts, categoryList, brandList, refreshProducts } = useProductsContext();
+  const getNewProduct = () => ({
+    _id: uuid(),
     name: "",
     description: "",
     price: 0,
@@ -24,8 +26,8 @@ const AdminProducts = () => {
     rating: 0,
     trending: false,
     image: "",
-  };
-  const [productForm, setProductForm] = useState(initialProduct);
+  });
+  const [productForm, setProductForm] = useState(getNewProduct());
   const [isEditing, setIsEditing] = useState(false);
 
   const handleImageChange = (e) => {
@@ -46,7 +48,7 @@ const AdminProducts = () => {
     } else {
       await adminAddProductService(productForm, token);
     }
-    setProductForm(initialProduct);
+    setProductForm(getNewProduct());
     setIsEditing(false);
     refreshProducts();
   };
@@ -62,7 +64,7 @@ const AdminProducts = () => {
   };
 
   const cancelEdit = () => {
-    setProductForm(initialProduct);
+    setProductForm(getNewProduct());
     setIsEditing(false);
   };
 
@@ -99,6 +101,7 @@ const AdminProducts = () => {
             type="number"
             className="border p-2 rounded"
             value={productForm.price}
+            min={0}
             onChange={(e) => setProductForm({ ...productForm, price: Number(e.target.value) })}
           />
           <label className="text-sm">Новая цена</label>
@@ -106,29 +109,50 @@ const AdminProducts = () => {
             type="number"
             className="border p-2 rounded"
             value={productForm.newPrice}
+            min={0}
             onChange={(e) => setProductForm({ ...productForm, newPrice: Number(e.target.value) })}
           />
           <label className="text-sm">Бренд</label>
-          <input
-            type="text"
+          <select
             className="border p-2 rounded"
             value={productForm.brand}
             onChange={(e) => setProductForm({ ...productForm, brand: e.target.value })}
-          />
+          >
+            <option value="">Выберите бренд</option>
+            {brandList.map((b) => (
+              <option key={b._id} value={b.brandName}>
+                {b.brandName}
+              </option>
+            ))}
+          </select>
           <label className="text-sm">Категория</label>
-          <input
-            type="text"
+          <select
             className="border p-2 rounded"
             value={productForm.category}
             onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
-          />
+          >
+            <option value="">Выберите категорию</option>
+            {categoryList.map((c) => (
+              <option key={c._id} value={c.categoryName}>
+                {c.categoryName}
+              </option>
+            ))}
+          </select>
           <label className="text-sm">Пол</label>
-          <input
-            type="text"
+          <select
             className="border p-2 rounded"
             value={productForm.gender}
             onChange={(e) => setProductForm({ ...productForm, gender: e.target.value })}
-          />
+          >
+            <option value="">Выберите пол</option>
+            {gendersList
+              .filter((g) => g.value !== "all")
+              .map((g) => (
+                <option key={g.value} value={g.value}>
+                  {g.label}
+                </option>
+              ))}
+          </select>
           <label className="text-sm">Вес</label>
           <input
             type="text"
@@ -141,6 +165,7 @@ const AdminProducts = () => {
             type="number"
             className="border p-2 rounded"
             value={productForm.quantity}
+            min={0}
             onChange={(e) => setProductForm({ ...productForm, quantity: Number(e.target.value) })}
           />
           <label className="text-sm">Рейтинг</label>
@@ -149,6 +174,8 @@ const AdminProducts = () => {
             className="border p-2 rounded"
             value={productForm.rating}
             step="0.1"
+            min={0}
+            max={5}
             onChange={(e) => setProductForm({ ...productForm, rating: Number(e.target.value) })}
           />
           <label className="inline-flex items-center gap-2">

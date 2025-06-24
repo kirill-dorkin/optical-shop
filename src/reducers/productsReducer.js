@@ -4,6 +4,7 @@ export const initialState = {
   allProducts: [],
   wishlist: [],
   categoryList: [],
+  brandList: [],
   maxRange: 0,
   filters: {
     gender: "all",
@@ -82,6 +83,9 @@ export const productsReducer = (state, action) => {
 
     case actionTypes.INITIALIZE_CATEGORIES:
       return { ...state, categoryList: action.payload };
+
+    case actionTypes.INITIALIZE_BRANDS:
+      return { ...state, brandList: action.payload };
 
     case addressTypes.ADD_ADDRESS:
       return { ...state, addressList: action.payload };

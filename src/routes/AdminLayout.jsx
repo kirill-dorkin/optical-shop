@@ -5,6 +5,7 @@ const links = [
   { path: "/admin", label: "Статистика" },
   { path: "/admin/products", label: "Товары" },
   { path: "/admin/categories", label: "Категории" },
+  { path: "/admin/brands", label: "Бренды" },
 ];
 
 const AdminLayout = () => {

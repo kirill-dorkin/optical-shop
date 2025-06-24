@@ -95,3 +95,39 @@ export const deleteCategoryHandler = function (schema, request) {
   category.destroy();
   return new Response(200, {}, { message: "Category deleted" });
 };
+
+export const addBrandHandler = function (schema, request) {
+  if (!isAdminAuthenticated(request)) {
+    return new Response(401, {}, { errors: ["Unauthorized"] });
+  }
+  const newBrand = JSON.parse(request.requestBody);
+  const createdBrand = schema.brands.create(newBrand);
+  return new Response(201, {}, { brand: createdBrand.attrs });
+};
+
+export const updateBrandHandler = function (schema, request) {
+  if (!isAdminAuthenticated(request)) {
+    return new Response(401, {}, { errors: ["Unauthorized"] });
+  }
+  const brandId = request.params.brandId;
+  const updatedAttrs = JSON.parse(request.requestBody);
+  const brand = schema.brands.findBy({ _id: brandId });
+  if (!brand) {
+    return new Response(404, {}, { errors: ["Brand not found"] });
+  }
+  brand.update(updatedAttrs);
+  return new Response(200, {}, { brand: brand.attrs });
+};
+
+export const deleteBrandHandler = function (schema, request) {
+  if (!isAdminAuthenticated(request)) {
+    return new Response(401, {}, { errors: ["Unauthorized"] });
+  }
+  const brandId = request.params.brandId;
+  const brand = schema.brands.findBy({ _id: brandId });
+  if (!brand) {
+    return new Response(404, {}, { errors: ["Brand not found"] });
+  }
+  brand.destroy();
+  return new Response(200, {}, { message: "Brand deleted" });
+};

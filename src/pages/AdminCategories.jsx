@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import {
   adminAddCategoryService,
@@ -10,13 +11,13 @@ import { useAdminContext, useProductsContext } from "../contexts";
 const AdminCategories = () => {
   const { token } = useAdminContext();
   const { categoryList, refreshCategories } = useProductsContext();
-  const initialCategory = {
-    _id: "",
+  const getNewCategory = () => ({
+    _id: uuid(),
     categoryName: "",
     description: "",
     categoryImg: "",
-  };
-  const [categoryForm, setCategoryForm] = useState(initialCategory);
+  });
+  const [categoryForm, setCategoryForm] = useState(getNewCategory());
   const [isEditing, setIsEditing] = useState(false);
 
   const handleImageChange = (e) => {
@@ -37,7 +38,7 @@ const AdminCategories = () => {
     } else {
       await adminAddCategoryService(categoryForm, token);
     }
-    setCategoryForm(initialCategory);
+    setCategoryForm(getNewCategory());
     setIsEditing(false);
     refreshCategories();
   };
@@ -53,7 +54,7 @@ const AdminCategories = () => {
   };
 
   const cancelEdit = () => {
-    setCategoryForm(initialCategory);
+    setCategoryForm(getNewCategory());
     setIsEditing(false);
   };
 

@@ -3,6 +3,7 @@ import { initialState, productsReducer } from "../../reducers/productsReducer";
 import {
   getAllCategoriesService,
   getAllProductsService,
+  getAllBrandsService,
 } from "../../api/apiServices";
 import {
   actionTypes,
@@ -55,6 +56,23 @@ const ProductsContextProvider = ({ children }) => {
     }
   };
 
+  const refreshBrands = async () => {
+    setLoading(true);
+    try {
+      const res = await getAllBrandsService();
+      if (res.status === 200) {
+        dispatch({
+          type: actionTypes.INITIALIZE_BRANDS,
+          payload: res.data.brands,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     (async () => {
@@ -73,6 +91,14 @@ const ProductsContextProvider = ({ children }) => {
           dispatch({
             type: actionTypes.INITIALIZE_CATEGORIES,
             payload: categoryRes.data.categories,
+          });
+        }
+
+        const brandRes = await getAllBrandsService();
+        if (brandRes.status === 200) {
+          dispatch({
+            type: actionTypes.INITIALIZE_BRANDS,
+            payload: brandRes.data.brands,
           });
         }
       } catch (e) {
@@ -160,6 +186,7 @@ const ProductsContextProvider = ({ children }) => {
         filters: state.filters,
         maxRange: state.maxRange,
         categoryList: state.categoryList,
+        brandList: state.brandList,
         addressList: state.addressList,
         isInCart,
         isInWish,
@@ -178,6 +205,7 @@ const ProductsContextProvider = ({ children }) => {
         setisOrderPlaced,
         refreshProducts,
         refreshCategories,
+        refreshBrands,
       }}
     >
       {children}
