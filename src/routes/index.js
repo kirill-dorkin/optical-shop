@@ -5,7 +5,16 @@ import RequiresAuth from "./RequiresAuth";
 import { authRoutes, contentRoutes } from "./publicRoutes";
 import { privateRoutes } from "./privateRoutes";
 
-import { ErrorPage, Home, Login, AdminLogin, AdminDashboard } from "../pages";
+import {
+  ErrorPage,
+  Home,
+  Login,
+  AdminLogin,
+  AdminHome,
+  AdminProducts,
+  AdminCategories,
+} from "../pages";
+import AdminLayout from "./AdminLayout";
 import { useAuthContext, useAdminContext } from "../contexts";
 
 const Index = () => {
@@ -32,9 +41,11 @@ const Index = () => {
         ))}
       </Route>
       <Route
-        element={adminToken ? <Outlet /> : <Navigate to="/admin/login" replace />}
+        element={adminToken ? <AdminLayout /> : <Navigate to="/admin/login" replace />}
       >
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminHome />} index />
+        <Route path="/admin/products" element={<AdminProducts />} />
+        <Route path="/admin/categories" element={<AdminCategories />} />
       </Route>
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route element={<SharedLayout />}>
