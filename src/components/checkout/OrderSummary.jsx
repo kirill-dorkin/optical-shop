@@ -21,7 +21,7 @@ const OrderSummary = () => {
       <hr />
       <div className="flex justify-between items-center">
         <p className=" text-gray-600">Итого</p>
-        <p className="text-2xl">₹{totalPriceOfCartProducts}</p>
+        <p className="text-2xl">{totalPriceOfCartProducts} сом</p>
       </div>
     </div>
   );

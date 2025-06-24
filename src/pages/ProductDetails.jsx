@@ -55,7 +55,7 @@ const ProductDetails = () => {
               <StarRating />
 
               <span className="text-xs text-gray-400">
-                ({product?.rating}) Rating
+                ({product?.rating}) Рейтинг
               </span>
             </div>
           </div>
@@ -87,12 +87,12 @@ const ProductDetails = () => {
           </div>
 
           <div className="flex gap-2 items-center pb-10 sm:pb-0">
-            Price:
+            Цена:
             <span className="ms-1 text-xl sm:text-2xl text-amber-600">
-              ₹{product?.newPrice}
+              {product?.newPrice} сом
             </span>
             <span className="text-sm text-gray-600 line-through">
-              ₹{product?.price}
+              {product?.price} сом
             </span>
           </div>
 

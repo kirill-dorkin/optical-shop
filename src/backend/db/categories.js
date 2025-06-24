@@ -10,23 +10,23 @@ import glassCategory3 from "../../assets/categories/sportsmod1.jpg";
 export const categories = [
   {
     _id: "ef1f52f6-4e35-4cd7-ad4a-0a9b52de894f",
-    categoryName: "vision",
+    categoryName: "оптика",
     description:
-      "Clear vision and stylish frames for a perfect blend of functionality and fashion",
+      "Чёткое зрение и стильные оправы для идеального сочетания функции и моды",
     categoryImg: glassCategory1,
   },
   {
     _id: "937d27a0-51b7-4005-bb04-4f5f111eac90",
-    categoryName: "sports",
+    categoryName: "спортивные",
     description:
-      "Stay focused and perform at your best with our high-performance sports glasses.",
+      "Оставайтесь сосредоточенными и добивайтесь лучших результатов с нашими спортивными очками",
     categoryImg: glassCategory3,
   },
   {
     _id: "1164f45b-1659-4631-88d7-47325bb21eff",
-    categoryName: "sunglasses",
+    categoryName: "солнцезащитные",
     description:
-      "Protect your eyes in style with our UV-protected sunglasses collection.",
+      "Защитите глаза стильно с нашей коллекцией очков с УФ-защитой",
     categoryImg: glassCategory2,
   },
 ];

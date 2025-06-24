@@ -49,14 +49,14 @@ const SingleProduct = ({ product }) => {
                 <span>{product.rating}</span>
 
                 <GiRoundStar className=" text-yellow-400 mb-1" />
-                <span className="text-xs text-gray-400">Rating</span>
+                <span className="text-xs text-gray-400">Рейтинг</span>
               </span>
             </div>
 
             <div className="flex flex-col items-end">
-              <span className="text-amber-600">₹{product.newPrice}</span>
+              <span className="text-amber-600">{product.newPrice} сом</span>
               <span className="text-sm text-gray-600 line-through">
-                {product.price}
+                {product.price} сом
               </span>
             </div>
           </div>
