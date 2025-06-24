@@ -30,7 +30,7 @@ const Filters = ({ isFilterOpen, setIsFilterOpen }) => {
         />
       </div>
       <button
-        className="py-0.5 px-2 w-16 text-center bg-black/[0.2]  text-sm font-semibold shadow-sm rounded-md hover:bg-gray-800 hover:text-white transition-colors "
+        className="py-0.5 px-2 w-fit text-center bg-black/[0.2] text-sm font-semibold shadow-sm rounded-md hover:bg-gray-800 hover:text-white transition-colors"
         onClick={clearFilters}
       >
         Очистить
