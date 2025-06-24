@@ -5,11 +5,12 @@ import RequiresAuth from "./RequiresAuth";
 import { authRoutes, contentRoutes } from "./publicRoutes";
 import { privateRoutes } from "./privateRoutes";
 
-import { ErrorPage, Home, Login } from "../pages";
-import { useAuthContext } from "../contexts";
+import { ErrorPage, Home, Login, AdminLogin, AdminDashboard } from "../pages";
+import { useAuthContext, useAdminContext } from "../contexts";
 
 const Index = () => {
   const { token } = useAuthContext();
+  const { token: adminToken } = useAdminContext();
   const location = useLocation();
 
   return (
@@ -30,6 +31,12 @@ const Index = () => {
           <Route key={idx} path={route.path} element={route.element} exact />
         ))}
       </Route>
+      <Route
+        element={adminToken ? <Outlet /> : <Navigate to="/admin/login" replace />}
+      >
+        <Route path="/admin" element={<AdminDashboard />} />
+      </Route>
+      <Route path="/admin/login" element={<AdminLogin />} />
       <Route element={<SharedLayout />}>
         <Route path="/" element={<Home />} index />
         <Route path="*" element={<ErrorPage />} />
