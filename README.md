@@ -95,3 +95,21 @@ To run the «Оптика Стиль» ecommerce web application locally, follow
 
 https://github.com/SandhyaR1007/eyesome-react/assets/47480884/39c03156-7c35-448d-9ee5-ede9d3b3124d
 
+
+## Развертывание на Netlify
+
+1. Убедитесь, что в репозитории присутствуют файлы `netlify.toml` и `public/_redirects` (они уже добавлены).
+2. Запушьте код в репозиторий на GitHub, GitLab или Bitbucket.
+3. Создайте аккаунт на [Netlify](https://www.netlify.com/) и выберите пункт **Add new site -> Import from Git**.
+4. Подключите ваш репозиторий и оставьте настройки сборки:
+   - **Build command:** `npm run build`
+   - **Publish directory:** `build`
+5. В разделе **Site settings -> Build & deploy -> Environment** добавьте переменную `REACT_APP_JWT_SECRET` со значением вашего секрета.
+6. Нажмите **Deploy site** и дождитесь завершения сборки. После этого приложение станет доступно по предоставленной Netlify ссылке.
+
+Для деплоя через CLI можно установить инструмент:
+
+```bash
+npm install -g netlify-cli
+netlify deploy --prod
+```
