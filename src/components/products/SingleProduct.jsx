@@ -27,17 +27,12 @@ const SingleProduct = ({ product }) => {
       hover:scale-[1.02] hover:shadow-lg"
     >
       <div
-        // className="flex items-center justify-center p-10 xs:p-5 sm:p-10 bg-black/[0.075] h-1/2 xs:h-full sm:h-1/2 xs:w-1/2 w-full sm:w-full"
-        className="flex items-center justify-center p-10 xs:p-5 sm:p-10 bg-black/[0.075]  xs:w-1/2 w-full sm:w-full"
+        className="bg-black/[0.075] h-28 xs:w-1/2 w-full sm:w-full"
         onClick={() => {
           navigate(`/product/${product._id}`);
         }}
       >
-        <img
-          src={product.image}
-          alt=""
-          className="w-full object-cover xs:object-contain sm:object-cover h-28"
-        />
+        <img src={product.image} alt="" className="w-full h-full object-cover" />
       </div>
 
       <div className="p-3 flex flex-col justify-between gap-2 mt-2 h-1/2 xs:h-full sm:h-1/2 xs:w-2/3 w-full sm:w-full">
