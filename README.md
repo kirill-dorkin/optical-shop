@@ -51,6 +51,7 @@ To run the Eyesome ecommerce web application locally, follow these steps:
 - React Context API + useReducer
 - Tailwind CSS
 - Razorpay payment gateway
+- Montserrat and Russo One fonts with Cyrillic support
 
 ## Features
 
