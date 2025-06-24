@@ -21,6 +21,40 @@ const ProductsContextProvider = ({ children }) => {
   const [currentAddress, setCurrentAddress] = useState(state.addressList[0]);
   const [isOrderPlaced, setisOrderPlaced] = useState(false);
 
+  const refreshProducts = async () => {
+    setLoading(true);
+    try {
+      const res = await getAllProductsService();
+      if (res.status === 200) {
+        dispatch({
+          type: actionTypes.INITIALIZE_PRODUCTS,
+          payload: res.data.products,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshCategories = async () => {
+    setLoading(true);
+    try {
+      const res = await getAllCategoriesService();
+      if (res.status === 200) {
+        dispatch({
+          type: actionTypes.INITIALIZE_CATEGORIES,
+          payload: res.data.categories,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     (async () => {
@@ -142,6 +176,8 @@ const ProductsContextProvider = ({ children }) => {
         deleteAddress,
         setCurrentAddress,
         setisOrderPlaced,
+        refreshProducts,
+        refreshCategories,
       }}
     >
       {children}

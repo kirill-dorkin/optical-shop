@@ -1,69 +1,115 @@
 import { useState } from "react";
-import { adminAddCategoryService, adminDeleteCategoryService } from "../api/apiServices";
+import {
+  adminAddCategoryService,
+  adminDeleteCategoryService,
+  adminUpdateCategoryService,
+} from "../api/apiServices";
 import { useAdminContext, useProductsContext } from "../contexts";
 
 const AdminCategories = () => {
   const { token } = useAdminContext();
-  const { categoryList } = useProductsContext();
-  const [categoryForm, setCategoryForm] = useState({
+  const { categoryList, refreshCategories } = useProductsContext();
+  const initialCategory = {
     _id: "",
     categoryName: "",
     description: "",
     categoryImg: "",
-  });
+  };
+  const [categoryForm, setCategoryForm] = useState(initialCategory);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const addCategory = async (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setCategoryForm((prev) => ({ ...prev, categoryImg: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const saveCategory = async (e) => {
     e.preventDefault();
-    await adminAddCategoryService(categoryForm, token);
-    setCategoryForm({ _id: "", categoryName: "", description: "", categoryImg: "" });
+    if (isEditing) {
+      await adminUpdateCategoryService(categoryForm._id, categoryForm, token);
+    } else {
+      await adminAddCategoryService(categoryForm, token);
+    }
+    setCategoryForm(initialCategory);
+    setIsEditing(false);
+    refreshCategories();
   };
 
   const deleteCategory = async (id) => {
     await adminDeleteCategoryService(id, token);
+    refreshCategories();
+  };
+
+  const startEdit = (category) => {
+    setCategoryForm(category);
+    setIsEditing(true);
+  };
+
+  const cancelEdit = () => {
+    setCategoryForm(initialCategory);
+    setIsEditing(false);
   };
 
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-2xl font-semibold">Управление категориями</h2>
       <div className="grid md:grid-cols-2 gap-8">
-        <form onSubmit={addCategory} className="flex flex-col gap-2">
+        <form onSubmit={saveCategory} className="flex flex-col gap-2">
+          <label className="text-sm">ID</label>
           <input
             type="text"
-            placeholder="ID"
             className="border p-2 rounded"
             value={categoryForm._id}
             onChange={(e) => setCategoryForm({ ...categoryForm, _id: e.target.value })}
           />
+          <label className="text-sm">Название</label>
           <input
             type="text"
-            placeholder="Название"
             className="border p-2 rounded"
             value={categoryForm.categoryName}
             onChange={(e) => setCategoryForm({ ...categoryForm, categoryName: e.target.value })}
           />
+          <label className="text-sm">Описание</label>
           <input
             type="text"
-            placeholder="Описание"
             className="border p-2 rounded"
             value={categoryForm.description}
             onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })}
           />
-          <input
-            type="text"
-            placeholder="URL изображения"
-            className="border p-2 rounded"
-            value={categoryForm.categoryImg}
-            onChange={(e) => setCategoryForm({ ...categoryForm, categoryImg: e.target.value })}
-          />
-          <button className="btn-primary mt-2">Добавить</button>
+          <label className="text-sm">Изображение</label>
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+          {categoryForm.categoryImg && (
+            <img src={categoryForm.categoryImg} alt="preview" className="h-24 object-contain" />
+          )}
+          <div className="flex gap-2 mt-2">
+            <button className="btn-primary" type="submit">
+              {isEditing ? "Обновить" : "Добавить"}
+            </button>
+            {isEditing && (
+              <button type="button" className="btn-secondary" onClick={cancelEdit}>
+                Отмена
+              </button>
+            )}
+          </div>
         </form>
         <ul className="flex flex-col gap-2">
           {categoryList.map((c) => (
             <li key={c._id} className="border p-2 rounded flex justify-between">
               <span>{c.categoryName}</span>
-              <button className="text-red-600" onClick={() => deleteCategory(c._id)}>
-                Удалить
-              </button>
+              <div className="flex gap-2">
+                <button className="text-blue-600" onClick={() => startEdit(c)}>
+                  Редактировать
+                </button>
+                <button className="text-red-600" onClick={() => deleteCategory(c._id)}>
+                  Удалить
+                </button>
+              </div>
             </li>
           ))}
         </ul>
