@@ -16,8 +16,8 @@ const AdminDashboard = () => {
   const [productForm, setProductForm] = useState({
     _id: "",
     name: "",
-    price: 0,
-    newPrice: 0,
+    price: "",
+    newPrice: "",
     brand: "",
     category: "",
     image: "",
@@ -41,12 +41,17 @@ const AdminDashboard = () => {
 
   const addProduct = async (e) => {
     e.preventDefault();
-    await adminAddProductService(productForm, token);
+    const productData = {
+      ...productForm,
+      price: Number(productForm.price),
+      newPrice: Number(productForm.newPrice),
+    };
+    await adminAddProductService(productData, token);
     setProductForm({
       _id: "",
       name: "",
-      price: 0,
-      newPrice: 0,
+      price: "",
+      newPrice: "",
       brand: "",
       category: "",
       image: "",
@@ -109,7 +114,7 @@ const AdminDashboard = () => {
               placeholder="Цена"
               className="border p-2 rounded"
               value={productForm.price}
-              onChange={(e) => setProductForm({ ...productForm, price: Number(e.target.value) })}
+              onChange={(e) => setProductForm({ ...productForm, price: e.target.value })}
               required
             />
             <input
@@ -117,7 +122,7 @@ const AdminDashboard = () => {
               placeholder="Новая цена"
               className="border p-2 rounded"
               value={productForm.newPrice}
-              onChange={(e) => setProductForm({ ...productForm, newPrice: Number(e.target.value) })}
+              onChange={(e) => setProductForm({ ...productForm, newPrice: e.target.value })}
               required
             />
             <input

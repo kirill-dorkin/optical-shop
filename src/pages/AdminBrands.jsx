@@ -15,11 +15,13 @@ const AdminBrands = () => {
   const getNewBrand = () => ({ _id: uuid(), brandName: "" });
   const [brandForm, setBrandForm] = useState(getNewBrand());
   const [isEditing, setIsEditing] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const saveBrand = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
     if (isEditing) {
       await adminUpdateBrandService(brandForm._id, brandForm, token);
     } else {
@@ -28,6 +30,7 @@ const AdminBrands = () => {
     setBrandForm(getNewBrand());
     setIsEditing(false);
     setCurrentPage(1);
+    setSubmitted(false);
     refreshBrands();
   };
 
@@ -49,7 +52,7 @@ const AdminBrands = () => {
 
   useEffect(() => {
     refreshBrands();
-  }, []);
+  }, [refreshBrands]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const displayedBrands = brandList.slice(startIndex, startIndex + itemsPerPage);
@@ -62,7 +65,7 @@ const AdminBrands = () => {
           <label className="text-sm">ID</label>
           <input
             type="text"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !brandForm._id ? "border-red-500" : ""}`}
             value={brandForm._id}
             onChange={(e) => setBrandForm({ ...brandForm, _id: e.target.value })}
             required
@@ -70,7 +73,7 @@ const AdminBrands = () => {
           <label className="text-sm">Название</label>
           <input
             type="text"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !brandForm.brandName ? "border-red-500" : ""}`}
             value={brandForm.brandName}
             onChange={(e) => setBrandForm({ ...brandForm, brandName: e.target.value })}
             required
@@ -86,27 +89,29 @@ const AdminBrands = () => {
             )}
           </div>
         </form>
-        <ul className="flex flex-col gap-2">
-          {displayedBrands.map((b) => (
-            <li key={b._id} className="border p-2 rounded flex justify-between">
-              <span>{b.brandName}</span>
-              <div className="flex gap-2">
-                <button className="text-blue-600" onClick={() => startEdit(b)}>
-                  <FaEdit />
-                </button>
-                <button className="text-red-600" onClick={() => deleteBrand(b._id)}>
-                  <FaTrash />
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <Pagination
-          currentPage={currentPage}
-          totalItems={brandList.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={setCurrentPage}
-        />
+        <div className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2">
+            {displayedBrands.map((b) => (
+              <li key={b._id} className="border p-2 rounded flex justify-between">
+                <span>{b.brandName}</span>
+                <div className="flex gap-2">
+                  <button className="text-blue-600" onClick={() => startEdit(b)}>
+                    <FaEdit />
+                  </button>
+                  <button className="text-red-600" onClick={() => deleteBrand(b._id)}>
+                    <FaTrash />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            currentPage={currentPage}
+            totalItems={brandList.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
     </div>
   );

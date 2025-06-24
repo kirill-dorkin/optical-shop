@@ -20,6 +20,7 @@ const AdminCategories = () => {
   });
   const [categoryForm, setCategoryForm] = useState(getNewCategory());
   const [isEditing, setIsEditing] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -36,6 +37,7 @@ const AdminCategories = () => {
 
   const saveCategory = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
     if (isEditing) {
       await adminUpdateCategoryService(categoryForm._id, categoryForm, token);
     } else {
@@ -44,6 +46,7 @@ const AdminCategories = () => {
     setCategoryForm(getNewCategory());
     setIsEditing(false);
     setCurrentPage(1);
+    setSubmitted(false);
     refreshCategories();
   };
 
@@ -77,7 +80,7 @@ const AdminCategories = () => {
           <label className="text-sm">ID</label>
           <input
             type="text"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !categoryForm._id ? "border-red-500" : ""}`}
             value={categoryForm._id}
             onChange={(e) => setCategoryForm({ ...categoryForm, _id: e.target.value })}
             required
@@ -85,7 +88,7 @@ const AdminCategories = () => {
           <label className="text-sm">Название</label>
           <input
             type="text"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !categoryForm.categoryName ? "border-red-500" : ""}`}
             value={categoryForm.categoryName}
             onChange={(e) => setCategoryForm({ ...categoryForm, categoryName: e.target.value })}
             required
@@ -93,7 +96,7 @@ const AdminCategories = () => {
           <label className="text-sm">Описание</label>
           <input
             type="text"
-            className="border p-2 rounded"
+            className={`border p-2 rounded ${submitted && !categoryForm.description ? "border-red-500" : ""}`}
             value={categoryForm.description}
             onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })}
             required
@@ -123,27 +126,29 @@ const AdminCategories = () => {
             )}
           </div>
         </form>
-        <ul className="flex flex-col gap-2">
-          {displayedCategories.map((c) => (
-            <li key={c._id} className="border p-2 rounded flex justify-between">
-              <span>{c.categoryName}</span>
-              <div className="flex gap-2">
-                <button className="text-blue-600" onClick={() => startEdit(c)}>
-                  <FaEdit />
-                </button>
-                <button className="text-red-600" onClick={() => deleteCategory(c._id)}>
-                  <FaTrash />
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <Pagination
-          currentPage={currentPage}
-          totalItems={categoryList.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={setCurrentPage}
-        />
+        <div className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2">
+            {displayedCategories.map((c) => (
+              <li key={c._id} className="border p-2 rounded flex justify-between">
+                <span>{c.categoryName}</span>
+                <div className="flex gap-2">
+                  <button className="text-blue-600" onClick={() => startEdit(c)}>
+                    <FaEdit />
+                  </button>
+                  <button className="text-red-600" onClick={() => deleteCategory(c._id)}>
+                    <FaTrash />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            currentPage={currentPage}
+            totalItems={categoryList.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
     </div>
   );
