@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BsBookmarkHeart, BsFillBookmarkHeartFill } from "react-icons/bs";
 
 import { useProductsContext, useWishlistContext } from "../contexts";
@@ -7,7 +7,6 @@ import { getProductByIdService } from "../api/apiServices";
 import { StarRating } from "../components";
 
 const ProductDetails = () => {
-  const navigate = useNavigate();
   const { productId } = useParams();
   const { getProductById } = useProductsContext();
   const { addProductToWishlist, deleteProductFromWishlist, disableWish } =
