@@ -9,7 +9,7 @@ const AddressCard = ({
   setShowAddressForm,
 }) => {
   const { id, fullname, mobile, flat, area, city, pincode } = address;
-  const { currentAddress, setCurrentAddress, updateAddress, deleteAddress } =
+  const { currentAddress, setCurrentAddress, deleteAddress } =
     useProductsContext();
   return (
     <label

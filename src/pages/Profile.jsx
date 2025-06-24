@@ -1,17 +1,13 @@
 import { useState } from "react";
 
-import { useAuthContext, useProductsContext } from "../contexts";
-
-import { AddressCard, AddressForm } from "../components";
+import { useAuthContext } from "../contexts";
 import Address from "../components/address/Address";
 
 const Profile = () => {
   const userDetails = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
-  const { addressList } = useProductsContext();
   const [selectedItem, setSelectedItem] = useState("profile");
-  const [addNewAddress, setAddNewAddress] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
   const { logoutHandler } = useAuthContext();

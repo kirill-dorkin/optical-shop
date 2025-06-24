@@ -16,7 +16,7 @@ const Checkout = () => {
     if (location?.state !== "cart" || !cart.length) {
       navigate("/");
     }
-  }, []);
+  }, [location?.state, cart.length, navigate]);
 
   return (
     <>

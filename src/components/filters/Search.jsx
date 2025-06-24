@@ -34,7 +34,7 @@ const Search = () => {
     return () => {
       clearTimeout(id);
     };
-  }, [search]);
+  }, [search, allProducts, applyFilters, location?.pathname]);
 
   const changeHandler = (e) => {
     setSearch(e.target.value);
