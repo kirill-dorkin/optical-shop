@@ -13,6 +13,8 @@ export { default as Profile } from "./Profile";
 export { default as Checkout } from "./Checkout";
 export { default as Orders } from "./Orders";
 export { default as AdminLogin } from "./AdminLogin";
-export { default as AdminDashboard } from "./AdminDashboard";
+export { default as AdminHome } from "./AdminHome";
+export { default as AdminProducts } from "./AdminProducts";
+export { default as AdminCategories } from "./AdminCategories";
 
 export { default as ErrorPage } from "./ErrorPage";
