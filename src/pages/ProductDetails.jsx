@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { BsBookmarkHeart, BsFillBookmarkHeartFill } from "react-icons/bs";
@@ -22,21 +22,17 @@ const ProductDetails = () => {
   const { addProductToCart, disableCart } = useCartContext();
   const { addProductToWishlist, deleteProductFromWishlist, disableWish } =
     useWishlistContext();
-  const [loading, setLoading] = useState(false);
   const product = getProductById(productId);
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
       try {
-        const response = await getProductByIdService(productId);
+        await getProductByIdService(productId);
       } catch (err) {
         console.log(err);
-      } finally {
-        setLoading(false);
       }
     })();
-  }, [allProducts]);
+  }, [productId]);
 
   return (
     <div className="md:min-h-[80vh] flex justify-center items-center pt-5 sm:pt-3 pb-2 relative">

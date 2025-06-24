@@ -25,7 +25,7 @@ const Login = () => {
     return () => {
       clearInterval(id);
     };
-  }, [token]);
+  }, [token, navigate, location?.state?.from?.pathname]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

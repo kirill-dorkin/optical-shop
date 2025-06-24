@@ -22,7 +22,7 @@ const ProductListing = () => {
     if (location?.state?.from === "category") {
       setIsFilterOpen(true);
     }
-  }, []);
+  }, [location?.state?.from, setIsFilterOpen]);
 
   const scrollToTop = () => {
     window.scrollTo({
