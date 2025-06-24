@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useProductsContext } from "../../contexts";
 import { useNavigate } from "react-router";
 
@@ -7,7 +7,6 @@ const CategoryCard = ({
 }) => {
   const navigate = useNavigate();
   const { applyFilters } = useProductsContext();
-  const [showCategory, setShowCategory] = useState(true);
   const clickHandler = () => {
     applyFilters("categories", [categoryName]);
     navigate("/products", { state: { from: "category" } });

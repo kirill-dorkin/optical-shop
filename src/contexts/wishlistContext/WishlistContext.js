@@ -7,7 +7,7 @@ export const WishlistContext = createContext();
 
 const WishlistContextProvider = ({ children }) => {
   const { updateInCartOrInWish } = useProductsContext();
-  const [loadingWishlist, setLoadingWishlist] = useState(false);
+  const [loadingWishlist] = useState(false);
   const [disableWish, setDisableWish] = useState(false);
   const [state, dispatch] = useReducer(wishlistReducer, {
     wishlist: localStorage.getItem("wishlist")
