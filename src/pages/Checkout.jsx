@@ -9,7 +9,6 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { cart } = useCartContext();
   const [showModal, setShowModal] = useState(false);
-  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -25,7 +24,6 @@ const Checkout = () => {
           <Modal
             showModal={showModal}
             setShowModal={setShowModal}
-            setIsOrderPlaced={setIsOrderPlaced}
           />
           <section className="p-7 rounded-md shadow-sm bg-white/[0.7] flex flex-col gap-6 w-full h-min">
             <Address />

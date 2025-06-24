@@ -18,7 +18,7 @@ const ProductDetails = () => {
   const location = useLocation();
   const { productId } = useParams();
   const { token } = useAuthContext();
-  const { getProductById, allProducts } = useProductsContext();
+  const { getProductById } = useProductsContext();
   const { addProductToCart, disableCart } = useCartContext();
   const { addProductToWishlist, deleteProductFromWishlist, disableWish } =
     useWishlistContext();
